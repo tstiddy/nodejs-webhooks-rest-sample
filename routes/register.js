@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/* GET page to register webhook endpoint. */
 
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Office 365 Webhooks Sample' });
+  res.render('register', { title: 'Register Webhooks Endpoint' });
 });
 
 module.exports = router;

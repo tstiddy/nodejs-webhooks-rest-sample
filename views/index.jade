@@ -2,4 +2,8 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  ul
+    li
+      a(href='/register') Register Webhook endpoint
+    li
+      a(href='/listen') Listen to Webhook events
