@@ -5,7 +5,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var webhooks = require('./routes/webhook');
+var register = require('./routes/register');
+var listen = require('./routes/listen');
 
 var app = express();
 
@@ -17,7 +18,7 @@ app.locals.ENV_DEVELOPMENT = env == 'development';
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// app.use(favicon(__dirname + '/public/img/favicon.ico'));
+app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -26,7 +27,8 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/webhooks', webhooks);
+app.use('/register', listen);
+app.use('/listen', listen);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
