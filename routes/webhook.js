@@ -12,6 +12,8 @@ io.on('connection', function (socket) {
 });
 
 /* Event received route. */
+//TODO: This route needs to receive some sort
+// of filter for the notifications.
 router.get('/123', function(req, res) {
     io.to('123').emit('event_received', 'A message');
     
