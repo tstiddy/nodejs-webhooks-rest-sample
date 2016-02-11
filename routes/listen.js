@@ -24,7 +24,7 @@ router.get('/123', function(req, res) {
 
 /* Default webhooks route. */
 router.get('/', function(req, res) {
-    res.render('listen', { title: 'Listen to Webhook Events' });
+    res.render('listen');
 });
 
 module.exports = router;

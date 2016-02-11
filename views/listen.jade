@@ -1,8 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 Listen to Webhook Events
+  p.
+    Waiting for notifications...
   ul#events
 
   script(type='text/javascript' src='http://localhost:3001/socket.io/socket.io.js')
