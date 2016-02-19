@@ -1,0 +1,6 @@
+{
+  "clientID": "7af953ad-6954-4460-b50b-fcb5af180ad5",
+  "clientSecret": "So0AdzWFzhQPeltOupuXz5CR9NLTTZDn7q2fy/qLlMU=",
+  "resource": "https://graph.microsoft.com",
+  "callbackURL": "http://localhost:3000/callback"
+}
