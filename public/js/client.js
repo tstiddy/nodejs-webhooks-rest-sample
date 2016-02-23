@@ -6,5 +6,9 @@
         var newListItem = document.createElement('li');
         newListItem.innerText = 'Event id: ' + data;
         document.getElementById('events').appendChild(newListItem);
-    });    
+    });
 })();
+
+function connect() {
+    window.location
+}

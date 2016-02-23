@@ -6,8 +6,11 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "adal-node": "^0.1.18",
     "body-parser": "^1.13.3",
+    "cookie-parser": "^1.4.1",
     "express": "^4.13.3",
+    "express-session": "^1.13.0",
     "jade": "^1.11.0",
     "morgan": "^1.6.1",
     "serve-favicon": "^2.3.0",
