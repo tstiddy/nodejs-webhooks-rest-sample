@@ -1,23 +1,20 @@
-// Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
-var AuthenticationContext = require("adal-node").AuthenticationContext;
+/*
+ * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+ * See LICENSE in the project root for license information.
+ */
 
-// The application registration (must match Azure AD config)
-var credentials = {
-    authority: "https://login.microsoftonline.com/common",
-    client_id: "ENTER_YOUR_CLIENT_ID",
-    client_secret: "ENTER_YOUR_SECRET",
-    redirect_uri: "http://localhost:3000/login"
-};
+var AuthenticationContext = require("adal-node").AuthenticationContext;
+var adalConfiguration = require('./constants.js').adalConfiguration;
 
 /**
  * Generate a fully formed uri to use for authentication based on the supplied resource argument
  * @return {string} a fully formed uri with which authentcation can be completed
  */
 function getAuthUrl() {
-    return credentials.authority + "/oauth2/authorize" +
-        "?client_id=" + credentials.client_id +
+    return adalConfiguration.authority + "/oauth2/authorize" +
+        "?client_id=" + adalConfiguration.clientID +
         "&response_type=code" +
-        "&redirect_uri=" + credentials.redirect_uri;
+        "&redirect_uri=" + adalConfiguration.redirectUri;
 };
 
 /**
@@ -27,8 +24,8 @@ function getAuthUrl() {
  * @param {AcquireTokenCallback} callback The callback function.
  */
 function getTokenFromCode(res, code, callback) {
-    var authContext = new AuthenticationContext(credentials.authority);
-    authContext.acquireTokenWithAuthorizationCode(code, credentials.redirect_uri, res, credentials.client_id, credentials.client_secret, function (err, response) {
+    var authContext = new AuthenticationContext(adalConfiguration.authority);
+    authContext.acquireTokenWithAuthorizationCode(code, adalConfiguration.redirectUri, res, adalConfiguration.clientID, adalConfiguration.clientSecret, function (err, response) {
         if (err) {
             callback(null);
         }
@@ -46,8 +43,8 @@ function getTokenFromCode(res, code, callback) {
  * @param {AcquireTokenCallback} callback The callback function.
  */
 function getTokenFromRefreshToken(res, token, callback) {
-    var authContext = new AuthenticationContext(credentials.authority);
-    authContext.acquireTokenWithRefreshToken(token, credentials.client_id, credentials.client_secret, res, function (err, response) {
+    var authContext = new AuthenticationContext(adalConfiguration.authority);
+    authContext.acquireTokenWithRefreshToken(token, adalConfiguration.clientID, adalConfiguration.clientSecret, res, function (err, response) {
         if (err) {
             callback(null);
         }
