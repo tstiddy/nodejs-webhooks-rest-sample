@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var authContext = require('adal-node').AuthenticationContext;
 var authHelper = require('../authHelper.js');
+var dbHelper = new (require('../db/dbHelper'))();
+var requestUtil = require('../requestUtil.js')
+var subscriptionConfiguration = require('../constants').subscriptionConfiguration;
 
 /* GET home page. */
 
@@ -20,7 +23,38 @@ router.get('/callback', function(req, res) {
         //cache the refresh token in a cookie and go back to index
         res.cookie(authHelper.TOKEN_CACHE_KEY, token.refreshToken);
         res.cookie(authHelper.TENANT_CACHE_KEY, token.tenantId);
-        res.redirect('/listen');
+        
+        dbHelper.getSubscription(
+            token.userId, 
+            function checkForExistingSubscription(error, subscriptionData) {
+                if (subscriptionData === undefined) {
+                    // Make the request to subscription service
+                    subscriptionConfiguration.clientState = req.sessionID;
+                    requestUtil.postData(
+                        'graph.microsoft.com',
+                        '/beta/subscriptions',
+                        token.accessToken,
+                        JSON.stringify(subscriptionConfiguration),
+                        function redirectToListen(subscriptionData){
+                            subscriptionData.userId = token.userId;
+                            dbHelper.saveSubscription(
+                                subscriptionData,
+                                function(error){
+                                   res.render(
+                                       'listen', 
+                                       subscriptionData
+                                   ); 
+                                });
+                        }
+                    );
+                    // Then redirect to listen/subscriptionID
+                } else {
+                    // Redirect to listen/subscriptionID
+                    res.render('listen', subscriptionData);
+                }
+                
+            }
+        );
     }
     else {
         console.log("AuthHelper failed to acquire token");
