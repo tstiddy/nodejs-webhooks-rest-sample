@@ -27,4 +27,9 @@ router.get('/', function(req, res) {
     res.render('listen');
 });
 
+/* Default webhooks route. */
+router.post('/', function(req, res) {
+    res.send(req.query.validationToken);
+});
+
 module.exports = router;

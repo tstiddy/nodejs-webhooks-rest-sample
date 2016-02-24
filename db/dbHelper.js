@@ -17,10 +17,13 @@ dbHelper.prototype.createDatabase = function createDatabase() {
   var db = new sqlite3.Database(dbFile);
   var createSubscriptionStatement =
         'CREATE TABLE Subscription (' +
-            'UserID TEXT NOT NULL, ' +
-            'SubscriptionID TEXT NOT NULL, ' +
-            'ClientState TEXT  NOT NULL, ' +
-            'PRIMARY KEY (UserID)' +
+            'UserId TEXT NOT NULL, ' +
+            'SubscriptionId TEXT NOT NULL, ' +
+            'Resource TEXT NOT NULL, ' +
+            'ChangeType TEXT NOT NULL, ' +
+            'ClientState TEXT NOT NULL, ' +
+            'NotificationUrl TEXT NOT NULL, ' +
+            'SubscriptionExpirationDateTime TEXT NOT NULL' +
         ')';
 
   db.serialize(function createTable() {
@@ -39,20 +42,26 @@ dbHelper.prototype.createDatabase = function createDatabase() {
   db.close();
 };
 
-dbHelper.prototype.getSubscription = function getSubscription(userID, callback) {
+dbHelper.prototype.getSubscription = function getSubscription(userId, callback) {
   var db = new sqlite3.Database(dbFile);
   var getUserDataStatement =
         'SELECT ' +
-        '    SubscriptionID as subscriptionID, ' +
-        '    ClientState as clientState ' +
+            'UserId as userId, ' +
+            'SubscriptionId as subscriptionId, ' +
+            'Resource as resource, ' +
+            'ChangeType as changeType, ' +
+            'ClientState as clientState, ' +
+            'NotificationUrl as notificationUrl, ' +
+            'SubscriptionExpirationDateTime as subscriptionExpirationDateTime ' +
         'FROM Subscription ' +
-        'WHERE UserID = $userID';
+        'WHERE UserId = $userId ' + 
+        'AND SubscriptionExpirationDateTime > datetime(\'now\')';
 
   db.serialize(function executeSelect() {
     db.get(
       getUserDataStatement,
       {
-        $userID: userID
+        $userId: userId
       },
       function queryExecuted(error, subscriptionData) {
         callback(error, subscriptionData);
@@ -62,19 +71,23 @@ dbHelper.prototype.getSubscription = function getSubscription(userID, callback) 
 };
 
 dbHelper.prototype.saveSubscription =
-    function saveSubscription(userID, subscriptionID, clientState, callback) {
+    function saveSubscription(subscriptionData, callback) {
       var db = new sqlite3.Database(dbFile);
       var insertStatement = 'INSERT INTO Subscription ' +
-                            '(UserID, SubscriptionID, ClientState) ' +
-                            'VALUES ($userID, $subscriptionID, $clientState)';
+                            '(UserId, SubscriptionId, Resource, ChangeType, ClientState, NotificationUrl, SubscriptionExpirationDateTime) ' +
+                            'VALUES ($userId, $subscriptionId, $resource, $changeType, $clientState, $notificationUrl, $subscriptionExpirationDateTime)';
 
       db.serialize(function executeInsert() {
         db.run(
             insertStatement,
           {
-            $userID: userID,
-            subscriptionID: subscriptionID,
-            $clientState: clientState
+            $userId: subscriptionData.userId,
+            $subscriptionId: subscriptionData.subscriptionId,
+            $resource: subscriptionData.resource,
+            $clientState: subscriptionData.clientState,
+            $changeType: subscriptionData.changeType,
+            $notificationUrl: subscriptionData.notificationUrl,
+            $subscriptionExpirationDateTime: subscriptionData.subscriptionExpirationDateTime
           },
             callback
         );
