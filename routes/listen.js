@@ -1,18 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
-// Socket.io setup
-var socketServer = require('http').createServer(express);
-socketServer.listen(3001);
-var io = require('socket.io')(socketServer);
-
-// Socket event 
-io.on('connection', function (socket) {
-    socket.on('create_room', function(subscriptionId) {
-        socket.join(subscriptionId);
-        io.to(subscriptionId).emit('create_room', subscriptionId);
-    });
-});
+var io = require('../helpers/socketHelper.js');
 
 /* Default webhooks route. */
 router.get('/', function(req, res) {
