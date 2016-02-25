@@ -7,6 +7,7 @@ exports.adalConfiguration={
 
 exports.subscriptionConfiguration = {
   changeType: 'Created',
-  notificationUrl: 'https://736ed716.ngrok.io/listen',
-  resource: 'me/messages'
+  notificationUrl: 'https://1fc2e786.ngrok.io/listen',
+  resource: 'me/messages',
+  clientState: 'cLIENTsTATEfORvALIDATION'
 };

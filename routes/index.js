@@ -19,7 +19,6 @@ router.get('/callback', function(req, res) {
             function checkForExistingSubscription(error, subscriptionData) {
                 if (subscriptionData === undefined) {
                     // Make the request to subscription service
-                    subscriptionConfiguration.clientState = req.sessionID;
                     requestHelper.postData(
                         'graph.microsoft.com',
                         '/beta/subscriptions',
