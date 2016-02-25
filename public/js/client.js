@@ -1,10 +1,15 @@
 var socket = io.connect('http://localhost:3001');
 
 // Handle the event_received event.
-socket.on('notification_received', function (data) {
+socket.on('notification_received', function (notification) {
     var newListItem = document.createElement('li');
-    newListItem.appendChild(document.createTextNode(data));
-    console.log('Notification received: ' + data);
+
+    var changeTypeText = '<b>Change type:</b> ' + notification.changeType;
+    var subscriptionIdText = '<b>Subscription ID:</b> ' + notification.subscriptionId;
+    var resourceText = '<b>Resource:</b> ' + notification.resource;
+
+    newListItem.innerHTML = changeTypeText + '<br />' + subscriptionIdText  + '<br />' + resourceText;
+    console.log('Notification received: ' + JSON.stringify(notification));
     document.getElementById('events').appendChild(newListItem);
 });
 

@@ -37,7 +37,7 @@ router.post('/', function(req, res) {
         // If all the clientStates are valid, then wen notify the socket(s)
         if (clientStatesValid) {
             for(var i = 0; i < req.body.value.length; i++) {
-                io.to(req.body.value[i].subscriptionId).emit('notification_received', req.body.value[i].resource);
+                io.to(req.body.value[i].subscriptionId).emit('notification_received', req.body.value[i]);
             }
             // Send a status of 'Accepted'
             status = 202;
