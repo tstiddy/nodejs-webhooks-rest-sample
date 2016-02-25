@@ -4,7 +4,7 @@
  */
 
 var AuthenticationContext = require("adal-node").AuthenticationContext;
-var adalConfiguration = require('./constants.js').adalConfiguration;
+var adalConfiguration = require('../constants.js').adalConfiguration;
 
 /**
  * Generate a fully formed uri to use for authentication based on the supplied resource argument
