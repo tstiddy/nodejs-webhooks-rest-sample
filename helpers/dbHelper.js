@@ -5,7 +5,7 @@
 
 var sqlite3 = require('sqlite3').verbose();
 var fs = require('fs');
-var dbFile = './db/database.sqlite3';
+var dbFile = './helpers/database.sqlite3';
 
 function dbHelper() { }
 

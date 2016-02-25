@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var app = require('../app');
-var dbHelper = new (require('../db/dbHelper'))();
+var dbHelper = new (require('../helpers/dbHelper'))();
 
 dbHelper.createDatabase();
 app.set('port', process.env.PORT || 3000);
