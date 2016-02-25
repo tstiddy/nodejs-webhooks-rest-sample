@@ -6,24 +6,14 @@ var dbHelper = new (require('../db/dbHelper'))();
 var requestUtil = require('../requestUtil.js')
 var subscriptionConfiguration = require('../constants').subscriptionConfiguration;
 
-/* GET home page. */
-
-router.get('/', function(req, res) {
-  res.render('index');
-});
-
 /* Start authentication flow */
-router.get('/connect', function (req, res, next) {
-    res.redirect(authHelper.getAuthUrl());
+router.get('/', function(req, res) {
+  res.redirect(authHelper.getAuthUrl());
 });
 
 router.get('/callback', function(req, res) {
     authHelper.getTokenFromCode('https://graph.microsoft.com/', req.query.code, function (token) {
     if (token !== null) {
-        //cache the refresh token in a cookie and go back to index
-        //res.cookie(authHelper.TOKEN_CACHE_KEY, token.refreshToken);
-        //res.cookie(authHelper.TENANT_CACHE_KEY, token.tenantId);
-        
         dbHelper.getSubscription(
             token.userId, 
             function checkForExistingSubscription(error, subscriptionData) {
@@ -44,7 +34,6 @@ router.get('/callback', function(req, res) {
                                 });
                         }
                     );
-                    // Then redirect to listen/subscriptionID
                 } else {
                     // Redirect to listen/subscriptionID
                     res.render('listen', subscriptionData);
@@ -52,8 +41,7 @@ router.get('/callback', function(req, res) {
                 
             }
         );
-    }
-    else {
+    } else {
         console.log("AuthHelper failed to acquire token");
         res.status(500);
         res.send();
