@@ -3,7 +3,7 @@ var router = express.Router();
 var authContext = require('adal-node').AuthenticationContext;
 var authHelper = require('../helpers/authHelper.js');
 var dbHelper = new (require('../helpers/dbHelper'))();
-var requestUtil = require('../requestUtil.js')
+var requestHelper = require('../helpers/requestHelper.js')
 var subscriptionConfiguration = require('../constants').subscriptionConfiguration;
 
 /* Start authentication flow */
@@ -20,7 +20,7 @@ router.get('/callback', function(req, res) {
                 if (subscriptionData === undefined) {
                     // Make the request to subscription service
                     subscriptionConfiguration.clientState = req.sessionID;
-                    requestUtil.postData(
+                    requestHelper.postData(
                         'graph.microsoft.com',
                         '/beta/subscriptions',
                         token.accessToken,
