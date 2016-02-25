@@ -8,18 +8,10 @@ var io = require('socket.io')(socketServer);
 
 // Socket event 
 io.on('connection', function (socket) {
-    socket.join('123');
-});
-
-/* Event received route. */
-//TODO: This route needs to receive some sort
-// of filter for the notifications.
-router.get('/123', function(req, res) {
-    io.to('123').emit('event_received', 'A message');
-    
-    var status = 202;
-    var http = require('http');
-    res.status(status).end(http.STATUS_CODES[status]);
+    socket.on('create_room', function(subscriptionId) {
+        socket.join(subscriptionId);
+        io.to(subscriptionId).emit('create_room', subscriptionId);
+    });
 });
 
 /* Default webhooks route. */
@@ -29,7 +21,19 @@ router.get('/', function(req, res) {
 
 /* Default webhooks route. */
 router.post('/', function(req, res) {
-    res.send(req.query.validationToken);
+    if(req.query && req.query.validationToken) {
+        res.send(req.query.validationToken);
+    } else {
+        //send message to socket(s)
+        // We could possibly optimize this, let's see if the subscriptionId is the same
+        for(var i = 0; i < req.body.value.length; i++) {
+            io.to(req.body.value[i].subscriptionId).emit('notification_received', req.body.value[i].resource);
+        }
+        
+        var status = 202;
+        var http = require('http');
+        res.status(status).end(http.STATUS_CODES[status]);
+    }
 });
 
 module.exports = router;

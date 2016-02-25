@@ -21,8 +21,8 @@ router.get('/callback', function(req, res) {
     authHelper.getTokenFromCode('https://graph.microsoft.com/', req.query.code, function (token) {
     if (token !== null) {
         //cache the refresh token in a cookie and go back to index
-        res.cookie(authHelper.TOKEN_CACHE_KEY, token.refreshToken);
-        res.cookie(authHelper.TENANT_CACHE_KEY, token.tenantId);
+        //res.cookie(authHelper.TOKEN_CACHE_KEY, token.refreshToken);
+        //res.cookie(authHelper.TENANT_CACHE_KEY, token.tenantId);
         
         dbHelper.getSubscription(
             token.userId, 
@@ -40,10 +40,7 @@ router.get('/callback', function(req, res) {
                             dbHelper.saveSubscription(
                                 subscriptionData,
                                 function(error){
-                                   res.render(
-                                       'listen', 
-                                       subscriptionData
-                                   ); 
+                                   res.render('listen', subscriptionData);
                                 });
                         }
                     );
