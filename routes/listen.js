@@ -4,6 +4,10 @@ var io = require('../helpers/socketHelper.js');
 var http = require('http');
 var clientStateValueExpected = require('../constants').subscriptionConfiguration.clientState;
 
+router.get('/', function(req, res) {
+    res.render('listen', {subscriptionId : req.query.subscriptionId});
+});
+
 /* Default webhooks route. */
 router.post('/', function(req, res) {
     var status;
