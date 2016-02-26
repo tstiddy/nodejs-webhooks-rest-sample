@@ -17,8 +17,9 @@ socket.on('create_room', function (data) {
     console.log('Room created: ' + data);
 });
 
-var subscriptionId  =getQueryStringParameter('subscriptionId');
+var subscriptionId = getQueryStringParameter('subscriptionId');
 socket.emit('create_room', subscriptionId);
+document.getElementById('subscriptionId').innerHTML = subscriptionId;
 
 function getQueryStringParameter(paramToRetrieve) {
     var params = document.URL.split("?")[1].split("&");
