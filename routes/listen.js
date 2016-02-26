@@ -5,11 +5,6 @@ var http = require('http');
 var clientStateValueExpected = require('../constants').subscriptionConfiguration.clientState;
 
 /* Default webhooks route. */
-router.get('/', function(req, res) {
-    res.render('listen');
-});
-
-/* Default webhooks route. */
 router.post('/', function(req, res) {
     var status;
     // If there's a validationToken parameter in the query string,
