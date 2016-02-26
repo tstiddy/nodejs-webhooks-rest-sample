@@ -29,13 +29,13 @@ router.get('/callback', function(req, res) {
                             dbHelper.saveSubscription(
                                 subscriptionData,
                                 function(error){
-                                   res.redirect('/listen?subscriptionId=' + subscriptionData.subscriptionId);
+                                   res.redirect('/dashboard.html?subscriptionId=' + subscriptionData.subscriptionId);
                                 });
                         }
                     );
                 } else {
                     // Redirect to listen/subscriptionID
-                    res.redirect('/listen?subscriptionId=' + subscriptionData.subscriptionId);
+                    res.redirect('/dashboard.html?subscriptionId=' + subscriptionData.subscriptionId);
                 }
                 
             }
