@@ -1,9 +1,7 @@
 var express = require('express');
-var session = require('express-session')
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
@@ -24,16 +22,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
-}));
-
-app.use(cookieParser());
-// session middleware configuration
-// see https://github.com/expressjs/session
-app.use(session({
-  secret: '12345QWERTY-SECRET',
-  name: 'nodecookie',
-  resave: false,
-  saveUninitialized: false
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
