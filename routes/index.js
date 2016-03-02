@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+ * See LICENSE in the project root for license information.
+ */
 var express = require('express');
 var router = express.Router();
 var authContext = require('adal-node').AuthenticationContext;

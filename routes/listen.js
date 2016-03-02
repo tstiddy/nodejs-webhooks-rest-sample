@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+ * See LICENSE in the project root for license information.
+ */
 var express = require('express');
 var router = express.Router();
 var io = require('../helpers/socketHelper.js');
@@ -29,7 +33,7 @@ router.post('/', function(req, res) {
             }
         }
         
-        // If all the clientStates are valid, then wen notify the socket(s)
+        // If all the clientStates are valid, then we notify the socket(s)
         if (clientStatesValid) {
             for(var i = 0; i < req.body.value.length; i++) {
                 io.to(req.body.value[i].subscriptionId).emit('notification_received', req.body.value[i]);
