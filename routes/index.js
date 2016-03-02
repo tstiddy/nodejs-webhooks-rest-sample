@@ -33,7 +33,6 @@ router.get('/callback', function(req, res) {
 
 router.get('/disconnect', function (req, res, next) {
   var redirectUri = req.protocol + '://' + req.hostname + ':' + req.app.settings.port;
-  console.log('Disconnect redirect uri: ' + redirectUri);
   res.redirect('https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=' + redirectUri);
 });
 

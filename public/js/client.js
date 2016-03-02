@@ -8,12 +8,7 @@ socket.on('notification_received', function (notification) {
     var resourceText = '<b>Resource:</b> ' + notification.resource;
 
     newListItem.innerHTML = changeTypeText + '<br />' + resourceText;
-    console.log('Notification received: ' + JSON.stringify(notification));
     document.getElementById('events').appendChild(newListItem);
-});
-
-socket.on('create_room', function (data) {
-    console.log('Room created: ' + data);
 });
 
 var subscriptionId = getQueryStringParameter('subscriptionId');

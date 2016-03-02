@@ -8,7 +8,6 @@ var io = require('socket.io')(socketServer);
 io.on('connection', function (socket) {
     socket.on('create_room', function(subscriptionId) {
         socket.join(subscriptionId);
-        io.to(subscriptionId).emit('create_room', subscriptionId);
     });
 });
 

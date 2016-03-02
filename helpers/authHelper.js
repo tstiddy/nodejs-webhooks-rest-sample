@@ -35,27 +35,5 @@ function getTokenFromCode(res, code, callback) {
     });
 };
 
-
-/**
- * Gets a new access token via a previously issued refresh token.
- * @param {string} res The OAuth resource for which a token is being request. This parameter is optional and can be set to null.
- * @param {string} token A refresh token returned in a tokne response from a previous invocation of acquireToken.
- * @param {AcquireTokenCallback} callback The callback function.
- */
-function getTokenFromRefreshToken(res, token, callback) {
-    var authContext = new AuthenticationContext(adalConfiguration.authority);
-    authContext.acquireTokenWithRefreshToken(token, adalConfiguration.clientID, adalConfiguration.clientSecret, res, function (err, response) {
-        if (err) {
-            callback(null);
-        }
-        else {
-            callback(response);
-        }
-    });
-};
-
 exports.getAuthUrl = getAuthUrl;
 exports.getTokenFromCode = getTokenFromCode;
-exports.getTokenFromRefreshToken = getTokenFromRefreshToken;
-exports.TOKEN_CACHE_KEY = 'TOKEN_CACHE_KEY';
-exports.TENANT_CACHE_KEY = 'TENANT_CACHE_KEY';
