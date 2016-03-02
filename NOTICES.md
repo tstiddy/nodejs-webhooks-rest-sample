@@ -1,6 +1,6 @@
 This project uses the following third-party components:
 
-NodeJS, Copyright (c) by Joyent, Inc. and other Node contributors, is available under the [Node.js license](https://raw.githubusercontent.com/nodejs/node/master/LICENSE).
+NodeJS, Copyright (c) by Joyent, Inc. and other Node contributors, is available under the [The MIT License](https://raw.githubusercontent.com/nodejs/node/master/LICENSE).
 
 body-parser, Copyright (c) by Douglas Christopher Wilson, is available under [The MIT License](https://raw.githubusercontent.com/expressjs/body-parser/master/LICENSE).
 
