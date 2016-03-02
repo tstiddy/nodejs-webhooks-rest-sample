@@ -28,7 +28,7 @@ function postData(host, path, token, postData, callback) {
   // Set up the request
   var post = https.request(options, function (res) {
     res.on('data', function (subscriptionData) {
-      callback(JSON.parse(subscriptionData));
+      callback(null, JSON.parse(subscriptionData));
     });
   });
   
@@ -37,8 +37,8 @@ function postData(host, path, token, postData, callback) {
   // we're done!
   post.end();
 
-  post.on('error', function (e) {
-    console.log('Request error: ' + e.message);
+  post.on('error', function (error) {
+    callback(error, null);
   });
 }
 

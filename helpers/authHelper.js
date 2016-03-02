@@ -25,12 +25,12 @@ function getAuthUrl() {
  */
 function getTokenFromCode(res, code, callback) {
     var authContext = new AuthenticationContext(adalConfiguration.authority);
-    authContext.acquireTokenWithAuthorizationCode(code, adalConfiguration.redirectUri, res, adalConfiguration.clientID, adalConfiguration.clientSecret, function (err, response) {
-        if (err) {
-            callback(null);
+    authContext.acquireTokenWithAuthorizationCode(code, adalConfiguration.redirectUri, res, adalConfiguration.clientID, adalConfiguration.clientSecret, function (error, token) {
+        if (error) {
+            callback(error, null);
         }
         else {
-            callback(response);
+            callback(null, token);
         }
     });
 };
