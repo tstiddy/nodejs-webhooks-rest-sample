@@ -14,23 +14,27 @@ router.get('/', function(req, res) {
   res.redirect(authHelper.getAuthUrl());
 });
 
-router.get('/callback', function(req, res) {
-    authHelper.getTokenFromCode('https://graph.microsoft.com/', req.query.code, function (token) {
-    if (token !== null) {
+router.get('/callback', function(req, res, next) {
+    authHelper.getTokenFromCode('https://graph.microsoft.com/', req.query.code, function (authenticationError, token) {
+    if (token) {
         // Make the request to subscription service
         requestHelper.postData(
             'graph.microsoft.com',
             '/beta/subscriptions',
             token.accessToken,
             JSON.stringify(subscriptionConfiguration),
-            function redirectToListen(subscriptionData){
-                res.redirect('/dashboard.html?subscriptionId=' + subscriptionData.subscriptionId);
+            function redirectToListen(requestError, subscriptionData){
+                if(subscriptionData) {
+                    res.redirect('/dashboard.html?subscriptionId=' + subscriptionData.subscriptionId);
+                } else if (requestError) {
+                    res.status(requestError.status || 500);
+                    next(requestError);
+                }
             }
         );
-    } else {
-        console.log("AuthHelper failed to acquire token");
-        res.status(500);
-        res.send();
+    } else if (authenticationError) {
+        res.status(authenticationError.status || 500);
+        next(authenticationError);
     }
     });
 });
