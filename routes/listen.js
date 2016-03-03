@@ -41,8 +41,12 @@ router.post('/', function(req, res) {
             // Send a status of 'Accepted'
             status = 202;
         } else {
-            // Send a status of 'Bad request'
-            status = 400;
+            // Since the clientState field doesn't have the expected value, 
+            // this request might NOT come from Microsoft Graph.
+            // However, you should still return the same status that you'd
+            // return to Microsoft Graph to not alert possible impostors 
+            // that you have discovered them.   
+            status = 202;
         }
     }
     res.status(status).end(http.STATUS_CODES[status]);
