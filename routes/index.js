@@ -9,8 +9,13 @@ var authHelper = require('../helpers/authHelper.js');
 var requestHelper = require('../helpers/requestHelper.js')
 var subscriptionConfiguration = require('../constants').subscriptionConfiguration;
 
-/* Start authentication flow */
+/* Redirect to start page */
 router.get('/', function(req, res) {
+  res.redirect('/index.html');
+});
+
+/* Start authentication flow */
+router.get('/signin', function(req, res) {
   res.redirect(authHelper.getAuthUrl());
 });
 
@@ -27,19 +32,19 @@ router.get('/callback', function(req, res, next) {
                 if(subscriptionData) {
                     res.redirect('/dashboard.html?subscriptionId=' + subscriptionData.subscriptionId);
                 } else if (requestError) {
-                    res.status(requestError.status || 500);
+                    res.status(500);
                     next(requestError);
                 }
             }
         );
     } else if (authenticationError) {
-        res.status(authenticationError.status || 500);
+        res.status(500);
         next(authenticationError);
     }
     });
 });
 
-router.get('/disconnect', function (req, res, next) {
+router.get('/signout', function (req, res, next) {
   var redirectUri = req.protocol + '://' + req.hostname + ':' + req.app.settings.port;
   res.redirect('https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=' + redirectUri);
 });
