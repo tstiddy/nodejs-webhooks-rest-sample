@@ -11,6 +11,11 @@ var subscriptionConfiguration = require('../constants').subscriptionConfiguratio
 
 /* Start authentication flow */
 router.get('/', function(req, res) {
+  res.redirect('/index.html');
+});
+
+/* Start authentication flow */
+router.get('/signin', function(req, res) {
   res.redirect(authHelper.getAuthUrl());
 });
 
