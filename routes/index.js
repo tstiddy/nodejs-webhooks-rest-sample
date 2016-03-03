@@ -32,13 +32,13 @@ router.get('/callback', function(req, res, next) {
                 if(subscriptionData) {
                     res.redirect('/dashboard.html?subscriptionId=' + subscriptionData.subscriptionId);
                 } else if (requestError) {
-                    res.status(requestError.status || 500);
+                    res.status(500);
                     next(requestError);
                 }
             }
         );
     } else if (authenticationError) {
-        res.status(authenticationError.status || 500);
+        res.status(500);
         next(authenticationError);
     }
     });
