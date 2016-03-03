@@ -9,7 +9,7 @@ var authHelper = require('../helpers/authHelper.js');
 var requestHelper = require('../helpers/requestHelper.js')
 var subscriptionConfiguration = require('../constants').subscriptionConfiguration;
 
-/* Start authentication flow */
+/* Redirect to start page */
 router.get('/', function(req, res) {
   res.redirect('/index.html');
 });
