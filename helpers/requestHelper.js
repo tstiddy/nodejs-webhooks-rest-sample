@@ -42,4 +42,34 @@ function postData(host, path, token, postData, callback) {
   });
 }
 
+function getData (host, path, token, callback) {
+  var outHeaders = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false',
+    'Authorization': 'Bearer ' + token
+  };
+  var options = {
+    host: host,
+    path: path,
+    method: 'GET',
+    headers: outHeaders
+  };
+  
+  // Set up the request
+  var get = https.request(options, function (res) {
+    res.on('data', function (endpointData) {
+      callback(null, JSON.parse(endpointData));
+    });
+  });
+  
+  // we're done!
+  get.end();
+
+  get.on('error', function (error) {
+    callback(error, null);
+  });
+    
+}
+
 exports.postData = postData;
+exports.getData = getData;

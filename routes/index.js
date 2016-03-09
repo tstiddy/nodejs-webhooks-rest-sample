@@ -4,9 +4,9 @@
  */
 var express = require('express');
 var router = express.Router();
-var authContext = require('adal-node').AuthenticationContext;
 var authHelper = require('../helpers/authHelper.js');
-var requestHelper = require('../helpers/requestHelper.js')
+var dbHelper = new (require('../helpers/dbHelper'))();
+var requestHelper = require('../helpers/requestHelper.js');
 var subscriptionConfiguration = require('../constants').subscriptionConfiguration;
 
 /* Redirect to start page */
@@ -30,7 +30,10 @@ router.get('/callback', function(req, res, next) {
             JSON.stringify(subscriptionConfiguration),
             function redirectToListen(requestError, subscriptionData){
                 if(subscriptionData) {
-                    res.redirect('/dashboard.html?subscriptionId=' + subscriptionData.subscriptionId);
+                    subscriptionData.userId = token.userId;
+                    subscriptionData.accessToken = token.accessToken;
+                    dbHelper.saveSubscription(subscriptionData, null);
+                    res.redirect('/dashboard.html?subscriptionId=' + subscriptionData.subscriptionId + '&userId=' + subscriptionData.userId);
                 } else if (requestError) {
                     res.status(500);
                     next(requestError);
@@ -44,7 +47,8 @@ router.get('/callback', function(req, res, next) {
     });
 });
 
-router.get('/signout', function (req, res, next) {
+router.get('/signout/:userId', function (req, res, next) {
+  dbHelper.deleteSubscription(req.params.userId, null);
   var redirectUri = req.protocol + '://' + req.hostname + ':' + req.app.settings.port;
   res.redirect('https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=' + redirectUri);
 });
