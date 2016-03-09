@@ -5,6 +5,7 @@
 
 var AuthenticationContext = require("adal-node").AuthenticationContext;
 var adalConfiguration = require('../constants.js').adalConfiguration;
+var resource = 'https://graph.microsoft.com/';
 
 /**
  * Generate a fully formed uri to use for authentication based on the supplied resource argument
@@ -23,9 +24,9 @@ function getAuthUrl() {
  * @param {string} res A URI that identifies the resource for which the token is valid.
  * @param {AcquireTokenCallback} callback The callback function.
  */
-function getTokenFromCode(res, code, callback) {
+function getTokenFromCode(code, callback) {
     var authContext = new AuthenticationContext(adalConfiguration.authority);
-    authContext.acquireTokenWithAuthorizationCode(code, adalConfiguration.redirectUri, res, adalConfiguration.clientID, adalConfiguration.clientSecret, function (error, token) {
+    authContext.acquireTokenWithAuthorizationCode(code, adalConfiguration.redirectUri, resource, adalConfiguration.clientID, adalConfiguration.clientSecret, function (error, token) {
         if (error) {
             callback(error, null);
         }
