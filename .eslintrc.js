@@ -3,11 +3,13 @@ module.exports = {
     "browser": true,
     "node": true,
   },
-  "extends": "airbnb",
+  "extends": "airbnb/legacy",
   "rules":{
     "prefer-template": 0,
     "comma-dangle": 0,
     "func-names": 0,
-    "prefer-arrow-callback": 0
+    "prefer-arrow-callback": 0,
+    "new-cap": 0,
+    "no-param-reassign": 0
   }
 };
