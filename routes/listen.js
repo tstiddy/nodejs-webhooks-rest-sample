@@ -10,67 +10,79 @@ var dbHelper = new (require('../helpers/dbHelper'))();
 var http = require('http');
 var clientStateValueExpected = require('../constants').subscriptionConfiguration.clientState;
 
-/* Default webhooks route. */
-router.post('/', function(req, res) {
-    var status;
-    // If there's a validationToken parameter in the query string,
-    // then this is the request that Office 365 sends to check
-    // that this is a valid endpoint.
-    // Just send the validationToken back.
-    if(req.query && req.query.validationToken) {
-        res.send(req.query.validationToken);
-        // Send a status of 'Ok'
-        status = 200;
-    } else {
-        var clientStatesValid = false;
-        
-        // First, validate all the clientState values in array
-        for(var i = 0; i < req.body.value.length; i++) {
-            if(req.body.value[i].clientState !== clientStateValueExpected) {
-                // If just one clientState is invalid, we discard the whole batch
-                clientStatesValid = false;
-                break;
-            } else {
-                clientStatesValid = true;
-            }
+// Get subscription data from the database
+// Retrieve the actual mail message data from Office 365.
+// Send the message data to the socket.
+function processNotification(subscriptionId, resource, res, next) {
+  dbHelper.getSubscription(subscriptionId, function (dbError, subscriptionData) {
+    if (subscriptionData) {
+      requestHelper.getData(
+        '/beta/' + resource, subscriptionData.accessToken,
+        function (requestError, endpointData) {
+          if (endpointData) {
+            io.to(subscriptionId).emit('notification_received', endpointData);
+          } else if (requestError) {
+            res.status(500);
+            next(requestError);
+          }
         }
-        
-        // If all the clientStates are valid, then
-        // Get subscription data from the database
-        // Retrieve the actual mail message data from Office 365.
-        // Send the message data to the socket.
-        if (clientStatesValid) {
-            for(var i = 0; i < req.body.value.length; i++) {
-                var resource = req.body.value[i].resource;
-                var subscriptionId = req.body.value[i].subscriptionId;
-                dbHelper.getSubscription(subscriptionId, function (dbError, subscriptionData) {
-                    if(subscriptionData) {
-                        requestHelper.getData('/beta/' + resource, subscriptionData.accessToken, function (requestError, endpointData) {
-                            if(endpointData) {
-                                io.to(subscriptionId).emit('notification_received', endpointData);
-                            } else if (requestError) {
-                                res.status(500);
-                                next(requestError);
-                            }
-                        });
-                    } else if (dbError) {
-                        res.status(500);
-                        next(dbError);
-                    }
-                });
-            }
-            // Send a status of 'Accepted'
-            status = 202;
-        } else {
-            // Since the clientState field doesn't have the expected value, 
-            // this request might NOT come from Microsoft Graph.
-            // However, you should still return the same status that you'd
-            // return to Microsoft Graph to not alert possible impostors 
-            // that you have discovered them.   
-            status = 202;
-        }
+      );
+    } else if (dbError) {
+      res.status(500);
+      next(dbError);
     }
-    res.status(status).end(http.STATUS_CODES[status]);
+  });
+}
+
+/* Default listen route */
+router.post('/', function (req, res, next) {
+  var status;
+  var clientStatesValid;
+  var i;
+  var resource;
+  var subscriptionId;
+  // If there's a validationToken parameter in the query string,
+  // then this is the request that Office 365 sends to check
+  // that this is a valid endpoint.
+  // Just send the validationToken back.
+  if (req.query && req.query.validationToken) {
+    res.send(req.query.validationToken);
+    // Send a status of 'Ok'
+    status = 200;
+  } else {
+    clientStatesValid = false;
+
+    // First, validate all the clientState values in array
+    for (i = 0; i < req.body.value.length; i++) {
+      if (req.body.value[i].clientState !== clientStateValueExpected) {
+        // If just one clientState is invalid, we discard the whole batch
+        clientStatesValid = false;
+        break;
+      } else {
+        clientStatesValid = true;
+      }
+    }
+
+    // If all the clientStates are valid, then
+    // process the notification
+    if (clientStatesValid) {
+      for (i = 0; i < req.body.value.length; i++) {
+        resource = req.body.value[i].resource;
+        subscriptionId = req.body.value[i].subscriptionId;
+        processNotification(subscriptionId, resource, res, next);
+      }
+      // Send a status of 'Accepted'
+      status = 202;
+    } else {
+      // Since the clientState field doesn't have the expected value,
+      // this request might NOT come from Microsoft Graph.
+      // However, you should still return the same status that you'd
+      // return to Microsoft Graph to not alert possible impostors
+      // that you have discovered them.
+      status = 202;
+    }
+  }
+  res.status(status).end(http.STATUS_CODES[status]);
 });
 
 module.exports = router;
