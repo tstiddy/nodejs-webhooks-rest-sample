@@ -4,7 +4,7 @@
  */
 var gulp = require('gulp');
 var nodemon = require('gulp-nodemon');
-var plumber = require('gulp-plumber');
+var plumber = require('gulp-plumber'); // eslint-disable-line no-unused-vars
 
 gulp.task('develop', function () {
   nodemon({
