@@ -35,18 +35,27 @@ router.post('/', function(req, res) {
             }
         }
         
-        // If all the clientStates are valid, then we notify the socket(s)
+        // If all the clientStates are valid, then
+        // Get subscription data from the database
+        // Retrieve the actual mail message data from Office 365.
+        // Send the message data to the socket.
         if (clientStatesValid) {
             for(var i = 0; i < req.body.value.length; i++) {
                 var resource = req.body.value[i].resource;
                 var subscriptionId = req.body.value[i].subscriptionId;
                 dbHelper.getSubscription(subscriptionId, function (dbError, subscriptionData) {
                     if(subscriptionData) {
-                        requestHelper.getData('graph.microsoft.com', '/beta/' + resource, subscriptionData.accessToken, function (requestError, endpointData) {
+                        requestHelper.getData('/beta/' + resource, subscriptionData.accessToken, function (requestError, endpointData) {
                             if(endpointData) {
                                 io.to(subscriptionId).emit('notification_received', endpointData);
+                            } else if (requestError) {
+                                res.status(500);
+                                next(requestError);
                             }
                         });
+                    } else if (dbError) {
+                        res.status(500);
+                        next(dbError);
                     }
                 });
             }

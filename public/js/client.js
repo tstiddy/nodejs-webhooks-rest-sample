@@ -4,7 +4,7 @@
  */
 var socket = io.connect('http://localhost:3001');
 
-// Handle the event_received event.
+// Socket `notification_received` event handler.
 socket.on('notification_received', function (mailData) {
     var newListItem = document.createElement('li');
 
@@ -15,10 +15,13 @@ socket.on('notification_received', function (mailData) {
     document.getElementById('events').appendChild(newListItem);
 });
 
+// When the page first loads, create the socket room
 var subscriptionId = getQueryStringParameter('subscriptionId');
 socket.emit('create_room', subscriptionId);
 document.getElementById('subscriptionId').innerHTML = subscriptionId;
 
+// The page also needs to send the userId to properly
+// sign out the user.
 var userId = getQueryStringParameter('userId');
 document.getElementById('signOutLink').href += userId;
 

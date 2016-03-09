@@ -19,12 +19,14 @@ router.get('/signin', function(req, res) {
   res.redirect(authHelper.getAuthUrl());
 });
 
+// This route gets called at the end of the authentication flow.
+// It requests the subscription from Office 365, stores the subscription in a database
+// and redirects the browser to the dashboard.html page.
 router.get('/callback', function(req, res, next) {
-    authHelper.getTokenFromCode('https://graph.microsoft.com/', req.query.code, function (authenticationError, token) {
+    authHelper.getTokenFromCode(req.query.code, function (authenticationError, token) {
     if (token) {
         // Make the request to subscription service
         requestHelper.postData(
-            'graph.microsoft.com',
             '/beta/subscriptions',
             token.accessToken,
             JSON.stringify(subscriptionConfiguration),
@@ -47,7 +49,10 @@ router.get('/callback', function(req, res, next) {
     });
 });
 
-router.get('/signout/:userId', function (req, res, next) {
+// This route signs out the users by performing these tasks
+// Delete the subscription data from the database
+// Redirect the browser to the logout endpoint 
+router.get('/signout/:userId', function (req, res) {
   dbHelper.deleteSubscription(req.params.userId, null);
   var redirectUri = req.protocol + '://' + req.hostname + ':' + req.app.settings.port;
   res.redirect('https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=' + redirectUri);
