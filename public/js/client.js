@@ -5,19 +5,22 @@
 var socket = io.connect('http://localhost:3001');
 
 // Handle the event_received event.
-socket.on('notification_received', function (notification) {
+socket.on('notification_received', function (mailData) {
     var newListItem = document.createElement('li');
 
-    var changeTypeText = '<b>Change type:</b> ' + notification.changeType;
-    var resourceText = '<b>Resource:</b> ' + notification.resource;
+    var subject = '<b>Subject:</b> ' + mailData.subject;
+    var sender = '<b>From:</b> ' + mailData.sender.emailAddress.address;
 
-    newListItem.innerHTML = changeTypeText + '<br />' + resourceText;
+    newListItem.innerHTML = subject + '<br />' + sender;
     document.getElementById('events').appendChild(newListItem);
 });
 
 var subscriptionId = getQueryStringParameter('subscriptionId');
 socket.emit('create_room', subscriptionId);
 document.getElementById('subscriptionId').innerHTML = subscriptionId;
+
+var userId = getQueryStringParameter('userId');
+document.getElementById('signOutLink').href += userId;
 
 function getQueryStringParameter(paramToRetrieve) {
     var params = document.URL.split("?")[1].split("&");

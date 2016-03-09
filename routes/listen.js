@@ -5,6 +5,8 @@
 var express = require('express');
 var router = express.Router();
 var io = require('../helpers/socketHelper.js');
+var requestHelper = require('../helpers/requestHelper.js');
+var dbHelper = new (require('../helpers/dbHelper'))();
 var http = require('http');
 var clientStateValueExpected = require('../constants').subscriptionConfiguration.clientState;
 
@@ -36,7 +38,17 @@ router.post('/', function(req, res) {
         // If all the clientStates are valid, then we notify the socket(s)
         if (clientStatesValid) {
             for(var i = 0; i < req.body.value.length; i++) {
-                io.to(req.body.value[i].subscriptionId).emit('notification_received', req.body.value[i]);
+                var resource = req.body.value[i].resource;
+                var subscriptionId = req.body.value[i].subscriptionId;
+                dbHelper.getSubscription(subscriptionId, function (dbError, subscriptionData) {
+                    if(subscriptionData) {
+                        requestHelper.getData('graph.microsoft.com', '/beta/' + resource, subscriptionData.accessToken, function (requestError, endpointData) {
+                            if(endpointData) {
+                                io.to(subscriptionId).emit('notification_received', endpointData);
+                            }
+                        });
+                    }
+                });
             }
             // Send a status of 'Accepted'
             status = 202;
