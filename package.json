@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "debug": "node --debug-brk ./bin/www",
-    "lint": "eslint ./routes/."
+    "lint": "eslint ."
   },
   "dependencies": {
     "adal-node": "^0.1.18",
