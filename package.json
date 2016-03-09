@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node --debug-brk ./bin/www"
+    "start": "node ./bin/www",
+    "debug": "node --debug-brk ./bin/www",
+    "lint": "eslint ."
   },
   "dependencies": {
     "adal-node": "^0.1.18",
@@ -16,6 +18,9 @@
     "sqlite3": "^3.1.1"
   },
   "devDependencies": {
+    "eslint": "^2.3.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.1",
     "gulp": "^3.9.0",
     "gulp-nodemon": "^2.0.2",
     "gulp-plumber": "^1.0.0"

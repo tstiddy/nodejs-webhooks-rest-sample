@@ -12,26 +12,25 @@ var host = 'graph.microsoft.com';
  * @param {string} postData the data which will be 'POST'ed
  * @param {callback} callback
  */
-function postData(path, token, postData, callback) {
-  
+function postData(path, token, data, callback) {
   var options = {
     host: host,
     path: path,
     method: 'POST',
     headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token,
-        'Content-Length': postData.length
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Length': data.length
     }
   };
-  
+
   var post = https.request(options, function (res) {
     res.on('data', function (subscriptionData) {
       callback(null, JSON.parse(subscriptionData));
     });
   });
-  
-  post.write(postData);
+
+  post.write(data);
   post.end();
 
   post.on('error', function (error) {
@@ -45,30 +44,30 @@ function postData(path, token, postData, callback) {
  * @param {string} token the acess token with which the request should be authenticated
  * @param {callback} callback
  */
-function getData (path, token, callback) {
+function getData(path, token, callback) {
   var options = {
     host: host,
     path: path,
     method: 'GET',
     headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false',
-        'Authorization': 'Bearer ' + token
+      'Content-Type': 'application/json',
+      Accept: 'application/json;odata.metadata=minimal;' +
+              'odata.streaming=true;IEEE754Compatible=false',
+      Authorization: 'Bearer ' + token
     }
   };
-  
+
   var get = https.request(options, function (res) {
     res.on('data', function (endpointData) {
       callback(null, JSON.parse(endpointData));
     });
   });
-  
+
   get.end();
 
   get.on('error', function (error) {
     callback(error, null);
   });
-    
 }
 
 exports.postData = postData;

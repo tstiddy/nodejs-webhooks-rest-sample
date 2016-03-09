@@ -3,7 +3,7 @@
  * See LICENSE in the project root for license information.
  */
 
-var AuthenticationContext = require("adal-node").AuthenticationContext;
+var AuthenticationContext = require('adal-node').AuthenticationContext;
 var adalConfiguration = require('../constants.js').adalConfiguration;
 var resource = 'https://graph.microsoft.com/';
 
@@ -12,11 +12,11 @@ var resource = 'https://graph.microsoft.com/';
  * @return {string} a fully formed uri with which authentcation can be completed
  */
 function getAuthUrl() {
-    return adalConfiguration.authority + "/oauth2/authorize" +
-        "?client_id=" + adalConfiguration.clientID +
-        "&response_type=code" +
-        "&redirect_uri=" + adalConfiguration.redirectUri;
-};
+  return adalConfiguration.authority + '/oauth2/authorize' +
+    '?client_id=' + adalConfiguration.clientID +
+    '&response_type=code' +
+    '&redirect_uri=' + adalConfiguration.redirectUri;
+}
 
 /**
  * Gets a token for a given resource.
@@ -25,16 +25,22 @@ function getAuthUrl() {
  * @param {AcquireTokenCallback} callback The callback function.
  */
 function getTokenFromCode(code, callback) {
-    var authContext = new AuthenticationContext(adalConfiguration.authority);
-    authContext.acquireTokenWithAuthorizationCode(code, adalConfiguration.redirectUri, resource, adalConfiguration.clientID, adalConfiguration.clientSecret, function (error, token) {
-        if (error) {
-            callback(error, null);
-        }
-        else {
-            callback(null, token);
-        }
-    });
-};
+  var authContext = new AuthenticationContext(adalConfiguration.authority);
+  authContext.acquireTokenWithAuthorizationCode(
+    code,
+    adalConfiguration.redirectUri,
+    resource,
+    adalConfiguration.clientID,
+    adalConfiguration.clientSecret,
+    function (error, token) {
+      if (error) {
+        callback(error, null);
+      } else {
+        callback(null, token);
+      }
+    }
+  );
+}
 
 exports.getAuthUrl = getAuthUrl;
 exports.getTokenFromCode = getTokenFromCode;
