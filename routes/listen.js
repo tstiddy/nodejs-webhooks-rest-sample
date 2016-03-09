@@ -10,30 +10,6 @@ var dbHelper = new (require('../helpers/dbHelper'))();
 var http = require('http');
 var clientStateValueExpected = require('../constants').subscriptionConfiguration.clientState;
 
-// Get subscription data from the database
-// Retrieve the actual mail message data from Office 365.
-// Send the message data to the socket.
-function processNotification(subscriptionId, resource, res, next) {
-  dbHelper.getSubscription(subscriptionId, function (dbError, subscriptionData) {
-    if (subscriptionData) {
-      requestHelper.getData(
-        '/beta/' + resource, subscriptionData.accessToken,
-        function (requestError, endpointData) {
-          if (endpointData) {
-            io.to(subscriptionId).emit('notification_received', endpointData);
-          } else if (requestError) {
-            res.status(500);
-            next(requestError);
-          }
-        }
-      );
-    } else if (dbError) {
-      res.status(500);
-      next(dbError);
-    }
-  });
-}
-
 /* Default listen route */
 router.post('/', function (req, res, next) {
   var status;
@@ -84,5 +60,29 @@ router.post('/', function (req, res, next) {
   }
   res.status(status).end(http.STATUS_CODES[status]);
 });
+
+// Get subscription data from the database
+// Retrieve the actual mail message data from Office 365.
+// Send the message data to the socket.
+function processNotification(subscriptionId, resource, res, next) {
+  dbHelper.getSubscription(subscriptionId, function (dbError, subscriptionData) {
+    if (subscriptionData) {
+      requestHelper.getData(
+        '/beta/' + resource, subscriptionData.accessToken,
+        function (requestError, endpointData) {
+          if (endpointData) {
+            io.to(subscriptionId).emit('notification_received', endpointData);
+          } else if (requestError) {
+            res.status(500);
+            next(requestError);
+          }
+        }
+      );
+    } else if (dbError) {
+      res.status(500);
+      next(dbError);
+    }
+  });
+}
 
 module.exports = router;
