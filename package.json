@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node --debug-brk ./bin/www",
-    "lint": "eslint ."
+    "start": "node ./bin/www",
+    "debug": "node --debug-brk ./bin/www",
+    "lint": "eslint ./routes/."
   },
   "dependencies": {
     "adal-node": "^0.1.18",
