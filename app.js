@@ -2,18 +2,18 @@
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
  */
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var bodyParser = require('body-parser');
 
-const routes = require('./routes/index');
-const listen = require('./routes/listen');
+var routes = require('./routes/index');
+var listen = require('./routes/listen');
 
-const app = express();
+var app = express();
 
-const env = process.env.NODE_ENV || 'development';
+var env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env === 'development';
 
@@ -35,7 +35,7 @@ app.use('/listen', listen);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  const err = new Error('Not Found');
+  var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
