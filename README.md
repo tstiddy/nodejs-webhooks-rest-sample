@@ -1,52 +1,36 @@
-Microsoft Graph Webhook Sample for Node.js
+# Microsoft Graph Webhook Sample for Node.js
 
-A goal of many Microsoft Office add-ins is to improve user productivity. You can get closer to achieving this goal with the help of third-party services. Most of today's services implement the OAuth 2.0 specification to allow other applications into the user data.
+This Node.js sample shows how to start getting notifications from Microsoft Graph. The following are common tasks that a web application performs with Microsoft Graph webhooks:
 
-![Office Add-in Server Authentication Sample screenshot](/readme-images/Office-Add-in-Nodejs-ServerAuth.png)
+1. Sign-in your users with their work or school account to get an access token.
+2. Use the access token to create a webhook subscription.
+3. Send back a validation token to confirm the notification URL.
+4. Listen for notifications from Microsoft Graph.
+5. Request for more information in Office 365 using data in the notification.
+  
+![Microsoft Graph Webhook Sample for Node.js screenshot](/readme-images/Microsoft-Graph-NodeJs-Webhooks.png)
 
 Keep in mind that Office add-ins run on a variety of platforms and devices, which presents a great opportunity for your add-in. You must be aware, however, of [design considerations](../wiki/Office-add-in-design-considerations-when-using-OAuth-2.0-services) when you try to make OAuth flows work across a combination of platforms and technologies.
 
 ## Prerequisites
 
-To use the Office add-in Server Authentication sample, you need the following:
+To use the Webhook sample, you need the following:
 
-* [Node.js](https://nodejs.org/) is required to run the sample. The sample has been tested on Node.js version 4 and 5.
-* The sample requires a Bash shell, on Windows you can use [Git Bash for Windows](https://git-for-windows.github.io/) or Cygwin. Mac and Linux developers can use their standard terminals.
-* `Client ID` and `key` values of an application registered in Azure Management Portal.
+* [Node.js](https://nodejs.org/) version 4 or 5.
+* A Bash shell. Windows developers can use [Git Bash for Windows](https://git-for-windows.github.io/) or Cygwin. Mac and Linux developers can use their standard terminals.
 
-## Register your app in Azure or Google
+> Note: Try out the [Get started with Office 365 APIs](http://dev.office.com/getting-started/office365apis?platform=option-node#setup) page. It simplifies app registration on Microsoft Azure. If you follow the previous link, then you can skip the next prerequisites.
 
-The ServerAuth sample supports apps registered in Azure or Google. You can test the sample with either services or both.
+* An Office 365 account. You can sign up for [an Office 365 Developer subscription](https://portal.office.com/Signup/Signup.aspx?OfferId=6881A1CB-F4EB-4db3-9F18-388898DAF510&DL=DEVELOPERPACK&ali=1#0). The developer subscription includes resources to start building Office 365 apps.
 
-### Register your app in Azure
+     > Note: If you already have a subscription, the previous link sends the following message. Sorry, you can’t add that to your current account. In that case, use an account from your current Office 365 subscription.
+     
+* A Microsoft Azure subscription to register your application. Azure Active Directory provides identity services for your application. You can use a [Microsoft Azure trial subscription](https://account.windowsazure.com/SignUp).
 
-Register a web application in [Azure Management portal](https://manage.windowsazure.com) with the following configuration:
+     > Important: You also need to make sure your Azure subscription is bound to your Office 365 tenant. To do this, see the blog post, [Creating and Managing Multiple Windows Azure Active Directories](http://blogs.technet.com/b/ad/archive/2013/11/08/creating-and-managing-multiple-windows-azure-active-directories.aspx). The section **Adding a new directory** explains how to do this. For more information, see [Associate your Office 365 account with Azure AD to create and manage apps](https://msdn.microsoft.com/office/office365/howto/setup-development-environment#bk_CreateAzureSubscription).
+* A client ID and key of an application registered in Azure. [Add a web application in Azure](https://msdn.microsoft.com/office/office365/HowTo/add-common-consent-manually#bk_RegisterServerApp) and [grant the proper permissions](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/wiki/Grant-permissions-to-the-application-in-Azure) to it.
 
-Parameter | Value
----------|--------
-Name | ServerAuth sample (optional)
-Type | Web application and/or web API
-Sign-on URL | https://localhost:3000/connect/azure/callback
-App ID URI | https://localhost:3000 (optional)
-
-Once you register your application, take note of the *client ID* and *client secret* values.
-
-Note that the default permissions are enough for this sample. For more information on how to register your app, see [Register your web server app with the Azure Management Portal](https://msdn.microsoft.com/office/office365/HowTo/add-common-consent-manually#bk_RegisterServerApp).
-
-### Register your app in Google
-
-Register a web application in [Google Developers Console](https://console.developers.google.com) with the following configuration:
-
-Parameter | Value
----------|--------
-Project name | ServerAuth sample (optional)
-Credentials | OAuth client ID
-Application type | Web application
-Authorized redirect URIs | https://localhost:3000/connect/google/callback
-
-Once you register your application, take note of the *client ID* and *client secret* values.
-
-The sample requires at least one enabled API to work. We tested this sample with the Google+ API enabled. For more information on how to register your app, see [Developers Console Help](https://developers.google.com/console/help/new/).
+     > Note: During the app registration process, specify **http://localhost:3000/** as the **Sign-on URL**.
 
 ## Configure and run the web app
 
