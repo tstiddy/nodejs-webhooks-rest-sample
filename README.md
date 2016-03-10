@@ -19,11 +19,11 @@ To use the Webhook sample, you need the following:
 * [Node.js](https://nodejs.org/) version 4 or 5.
 * A Bash shell. Windows developers can use [Git Bash for Windows](https://git-for-windows.github.io/) or Cygwin. Mac and Linux developers can use their standard terminals.
 
-> Note: Try out the [Get started with Office 365 APIs](http://dev.office.com/getting-started/office365apis?platform=option-node#setup) page. It simplifies app registration on Microsoft Azure. If you follow the previous link, then you can skip the next prerequisites.
+> Note: Try out the [Get started with Office 365 APIs](http://dev.office.com/getting-started/office365apis?platform=option-node#setup) page. It simplifies app registration on Microsoft Azure. If you follow the previous link, then you can skip the remaining prerequisites.
 
-* An Office 365 account. You can sign up for [an Office 365 Developer subscription](https://portal.office.com/Signup/Signup.aspx?OfferId=6881A1CB-F4EB-4db3-9F18-388898DAF510&DL=DEVELOPERPACK&ali=1#0). The developer subscription includes resources to start building Office 365 apps.
+* An Office 365 account. You can sign up for [an Office 365 Developer subscription](https://portal.office.com/Signup/Signup.aspx?OfferId=6881A1CB-F4EB-4db3-9F18-388898DAF510&DL=DEVELOPERPACK&ali=1#0). The developer subscription includes an Office 365 account.
 
-     > Note: If you already have a subscription, the previous link sends the following message. Sorry, you can’t add that to your current account. In that case, use an account from your current Office 365 subscription.
+     > Note: If you already have a subscription, the previous link sends the following message. *Sorry, you can’t add that to your current account*. In that case, use an account from your current Office 365 subscription.
      
 * A Microsoft Azure subscription to register your application. Azure Active Directory provides identity services for your application. You can use a [Microsoft Azure trial subscription](https://account.windowsazure.com/SignUp).
 
@@ -44,10 +44,11 @@ For this sample, we use [ngrok](https://ngrok.com/) to create the tunnel. To con
 1. [Download](https://ngrok.com/download) and unzip the ngrok binaries for your platform.
 2. Type the following command
     
-    `ngrok http 3000`.
-3. Take note of the *https public URL* that ngrok provider for you. This is an example
+    `ngrok http 3000`
+    
+3. Take note of the *https public URL* that ngrok provides for you. This is an example
 
-    `https://<identifier>.ngrok.io`.
+    `https://<identifier>.ngrok.io`
 
 You'll need the *https public URL* in the next section.
 
@@ -76,7 +77,7 @@ You'll need the *https public URL* in the next section.
 
 ## Questions and comments
 
-We'd love to get your feedback about the Office 365 PHP Connect sample. You can send your questions and suggestions to us in the [Issues](./issues) section of this repository.
+We'd love to get your feedback about the Office 365 PHP Connect sample. You can send your questions and suggestions to us in the [Issues](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/issues) section of this repository.
 
 Office 365 development questions? Post them to [Stack Overflow](http://stackoverflow.com/questions/tagged/Office365+API). Make sure to tag your questions or comments with [Office365] and [API].
   
