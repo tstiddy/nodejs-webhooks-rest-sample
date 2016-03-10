@@ -77,7 +77,7 @@ You'll need the *https public URL* in the next section.
 
 ## Questions and comments
 
-We'd love to get your feedback about the Office 365 PHP Connect sample. You can send your questions and suggestions to us in the [Issues](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/issues) section of this repository.
+We'd love to get your feedback about the Microsoft Graph Webhook sample. You can send your questions and suggestions to us in the [Issues](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/issues) section of this repository.
 
 Office 365 development questions? Post them to [Stack Overflow](http://stackoverflow.com/questions/tagged/Office365+API). Make sure to tag your questions or comments with [Office365] and [API].
   
