@@ -10,7 +10,7 @@ This Node.js sample shows how to start getting notifications from Microsoft Grap
   
 ![Microsoft Graph Webhook Sample for Node.js screenshot](/readme-images/Microsoft-Graph-NodeJs-Webhooks.png)
 
-Keep in mind that Office add-ins run on a variety of platforms and devices, which presents a great opportunity for your add-in. You must be aware, however, of [design considerations](../wiki/Office-add-in-design-considerations-when-using-OAuth-2.0-services) when you try to make OAuth flows work across a combination of platforms and technologies.
+The previous screenshot shows the app in action. After your app gets a subscription, your app gets a notification when events happen in user data. Your app can then react to the event. This sample writes a list item for every notification received by the notification URL.
 
 ## Prerequisites
 
@@ -31,42 +31,32 @@ To use the Webhook sample, you need the following:
 * A client ID and key of an application registered in Azure. [Add a web application in Azure](https://msdn.microsoft.com/office/office365/HowTo/add-common-consent-manually#bk_RegisterServerApp) and [grant the proper permissions](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/wiki/Grant-permissions-to-the-application-in-Azure) to it.
 
      > Note: During the app registration process, specify **http://localhost:3000/** as the **Sign-on URL**.
+     
+## Configure tunneling software for your localhost
+
+Microsoft Graph needs a notification URL that it can reach to deliver notifications. The sample uses *localhost* as the development server. Microsoft Graph can't deliver notifications to *localhost*. For this reason, we need a tunnel that can forward requests from an URL on the internet to our *localhost*. For a more detailed explanation, see [Why do I have to use a tunnel?](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/wiki/Why-do-I-have-to-use-a-tunnel%3F). 
+
+> Note: You can also choose to deploy the sample to a cloud service, such as Azure. If you rather deploy this sample to Azure, see [Deploying the sample to Azure
+](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/wiki/Deploying-the-sample-to-Azure).
+
+For this sample, we use [ngrok](https://ngrok.com/) to create the tunnel. To configure ngrok:
+
+1. [Download](https://ngrok.com/download) and unzip the ngrok binaries for your platform.
+2. Type the following command
+    
+    `ngrok http 3000`.
+3. Take note of the *https public URL* that ngrok provider for you. This is an example
+
+    `https://<identifier>.ngrok.io`.
+
+You'll need the *https public URL* in the next section.
 
 ## Configure and run the web app
 
-1. Use a text editor to open ```ws-conf.js```.
-2. Replace *ENTER_YOUR_CLIENT_ID* with the client ID of your registered Azure or Google application.
-3. Replace *ENTER_YOUR_SECRET* with the client secret of your registered Azure or Google application.
-4. Generate a self-signed certificate using the included script: [`ss_certgen.sh`](/ss_certgen.sh).
-
-    To run the script, run the following command in your terminal:
-    
-    On Linux, Mac and Git Bash for Windows
-    ```
-    $ bash ss_certgen.sh
-    ```
-    On Cygwin for Windows
-    ```
-    $ bash -o igncr ss_certgen.sh
-    ```
-    > **Note:** <br />
-    Some OpenSSL installations on Windows throw the following error `Unable to load config info from /usr/local/ssl/openssl.cnf`. To specify the correct path, run the following command instead:
-    ```
-    $ OPENSSL_CONF='C:\Program Files (x86)\Git\ssl\openssl.cnf' bash ss_certgen.sh
-    ```
-
-   After running the script, two files will be created in the project root:
-   ```
-   server.crt // the certificate
-   ```
-   
-   ```
-   server.key // the key file
-   ```
-   
-   > **Note:** <br />
-   The `server.crt` and `server.key` files must be present in the project root - they will be picked up automatically at runtime. To use an alternate path see [`certconf.js`](/certconf.js).
-
+1. Use a text editor to open `constants.js`.
+2. Replace *ENTER_YOUR_CLIENT_ID* with the client ID of your registered Azure application.
+3. Replace *ENTER_YOUR_SECRET* with the client secret of your registered Azure application.
+4. Replace *ENTER_YOUR_NOTIFICATION_URL* with the *https public URL* from the previous section.
 5. Install the dependencies running the following command:
     ```
     npm install
@@ -76,66 +66,26 @@ To use the Webhook sample, you need the following:
     ```
     npm start
     ```
+    > Note: You can also make the application wait for a debugger. To wait for a debugger, use the following command instead:
+    ```
+    npm run debug
+    ```
+    You can attach the Visual Studio Code debugger. For more information, see [Debugging in Visual Studio Code](https://code.visualstudio.com/Docs/editor/debugging).
     
-    > **Note:** <br />
-    You must trust the self-signed certificate so it can display properly in Office. See, [Trust your self-signed certificate](https://github.com/OfficeDev/Office-add-in-Nodejs-ServerAuth/wiki/Trust-your-self-signed-certificate) for instructions.
-    
-7. Open Microsoft Word or Microsoft Excel and click **Insert** > **My add-ins** > **See all**
-8. Choose **Shared Folder** if you deployed the add-in to a network share, or **My Organization** if you deployed the add-in to the add-in catalog.
-9. Select **ServerAuth Sample**.
-
-## Deploy the add-in
-
-To make the add-in available in your Office client, you must deploy the manifest to a folder share. If you want to use the add-in in Word or Excel Online you must deploy the manifest to the add-in catalog.
-
-### To deploy the manifest to a folder share
-
-1. Create a folder on a network share, for example \\MyShare\MyManifests.
-2. Copy the manifest files from the root folder of this sample and paste to the network share.
-3. Open a new document in Excel or Word.
-4. Choose the File tab, and then choose Options.
-5. Choose Trust Center, and then choose the Trust Center Settings button.
-6. Choose Trusted Add-in Catalogs.
-7. In the Catalog Url box, enter the path to the network share you created in Step 1, and then choose Add Catalog.
-8. Select the Show in Menu check box, and then choose OK.
-
-For a detailed explanation of the previous process, see [Create a network shared folder catalog for task pane and content add-ins](https://msdn.microsoft.com/library/office/fp123503.aspx).
-
-### To deploy the manifest to the add-in catalog
-
-1. Browse to the add-in catalog.
-2. Choose **Apps for Office** from the left navigation bar.
-3. Choose **Upload**, and then **Choose files** to browse to the *manifest.xml* file in the root folder of this sample.
-4. Choose **OK**.
-
-For a detailed explanation of the previous process, see [Publish task pane and content add-ins to an add-in catalog on SharePoint](https://msdn.microsoft.com/library/office/fp123517.aspx).
-
-## Open the add-in in Word or Excel
-
-You can try the ServerAuth sample in Word or Excel desktop clients if you deployed the manifest to a network share or in Word or Excel Online if you deployed the manifest to the add-in catalog.
-
-To open the add-in:
-
-1. Open Word or Excel.
-2. Choose **My Add-ins** on the **Insert** tab.
-3. Choose **Shared Folder** if you deployed the manifest to a network share or **My Organization** if you deployed the manifest to the add-in catalog.
-4. Choose **ServerAuth sample**.
-
-## Credits
-
-This code sample is based on ideas originally published in a [blog post](http://blogs.msdn.com/b/richard_dizeregas_blog/archive/2015/08/10/connecting-to-office-365-from-an-office-add-in.aspx) by Richard diZerega. Richard is an evangelist at Microsoft who works with Office 365 developers.
+7. Open a browser and go to http://localhost:3000. 
 
 ## Questions and comments
 
-We'd love to get your feedback about this sample. You can send your questions and suggestions to us in the [Issues](https://github.com/OfficeDev/Office-add-in-Nodejs-ServerAuth/issues) section of this repository.
+We'd love to get your feedback about the Office 365 PHP Connect sample. You can send your questions and suggestions to us in the [Issues](./issues) section of this repository.
 
-Questions about Office 365 development in general should be posted to [Stack Overflow](http://stackoverflow.com/questions/tagged/office-addins). Make sure that your questions or comments are tagged with [office-addins].
+Office 365 development questions? Post them to [Stack Overflow](http://stackoverflow.com/questions/tagged/Office365+API). Make sure to tag your questions or comments with [Office365] and [API].
   
 ## Additional resources
 
-* [More add-in samples](https://github.com/OfficeDev?utf8=%E2%9C%93&query=-add-in)
-* [Office add-ins](http://msdn.microsoft.com/library/office/jj220060.aspx)
-* [Anatomy of an add-in](https://msdn.microsoft.com/library/office/jj220082.aspx#StartBuildingApps_AnatomyofApp)
+* [Office 365 APIs platform overview](https://msdn.microsoft.com/office/office365/howto/platform-development-overview)
+* [Getting started with Office 365 APIs](http://dev.office.com/getting-started/office365apis)
+* [Overview of Microsoft Graph](http://graph.microsoft.io/)
+* [Subscription reference documentation](https://graph.microsoft.io/en-us/docs/api-reference/beta/resources/subscription)
 
 ## Copyright
-Copyright (c) 2015 Microsoft. All rights reserved.
+Copyright (c) 2016 Microsoft. All rights reserved.
