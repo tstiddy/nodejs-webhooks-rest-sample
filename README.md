@@ -31,7 +31,7 @@ To use the Webhook sample, you need the following:
      
 ## Configure a tunnel for your localhost
 
-Microsoft Graph needs a notification URL that it can reach to deliver notifications. The sample uses *localhost* as the development server. Microsoft Graph can't deliver notifications to *localhost*. For this reason, we need a tunnel that can forward requests from an URL on the internet to our *localhost*. For a more detailed explanation, see [Why do I have to use a tunnel?](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/wiki/Why-do-I-have-to-use-a-tunnel%3F)
+The sample uses *localhost* as the development server. For this reason, we need a tunnel that can forward requests from an URL on the internet to our *localhost*. For a more detailed explanation, see [Why do I have to use a tunnel?](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/wiki/Why-do-I-have-to-use-a-tunnel%3F)
 
 For this sample, we use [ngrok](https://ngrok.com/) to create the tunnel. To configure ngrok:
 
