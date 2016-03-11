@@ -7,7 +7,9 @@ describe('ADAL', function () { // eslint-disable-line no-undef
     function () {
       assert(
         isADALConfigured(conf.adalConfiguration),
-        'Configure ADAL and the notification URL in file constants.js'
+        '\nRegister client ID and client secret in file constants.js.\n' +
+        'You don\'t have them? Get them by using the Office 365 app registration tool\n' +
+        'http://dev.office.com/app-registration'
       );
     }
   );
@@ -17,7 +19,10 @@ describe('NotificationURL', function () { // eslint-disable-line no-undef
   it('Checking notificationUrl in constants.js', function () { // eslint-disable-line no-undef
     assert(
       isSubscriptionConfigured(conf.subscriptionConfiguration),
-      'Configure ADAL and the notification URL in file constants.js'
+      '\nConfigure the notification URL in file constants.js.\n' +
+      'Install ngrok from https://ngrok.com/download and run\n' +
+      '\tngrok http 3000\n' +
+      'Use the https public URL in the notificationUrl property.'
     );
   });
 });
