@@ -18,31 +18,20 @@ To use the Webhook sample, you need the following:
 
 * [Node.js](https://nodejs.org/) version 4 or 5.
 * A Bash shell. Windows developers can use [Git Bash for Windows](https://git-for-windows.github.io/) or Cygwin. Mac and Linux developers can use their standard terminals.
+* An app registered in Azure. You can use the [Office 365 app registration tool](http://dev.office.com/app-registration). It simplifies app registration. Use the following parameters:
 
-> Note: Try out the [Office 365 app registration tool](http://dev.office.com/app-registration). It simplifies app registration. Use the following values:
-  * App type: Web App
-  * Sign on URL: http://localhost:3000
-  * Redirect URI: http://localhost:3000/callback
-  * App permissions: Mail.Read
-  <p/>If you use the tool, then you can skip the remaining prerequisites.
-
-* An Office 365 account. You can sign up for [an Office 365 Developer subscription](https://portal.office.com/Signup/Signup.aspx?OfferId=6881A1CB-F4EB-4db3-9F18-388898DAF510&DL=DEVELOPERPACK&ali=1#0). The developer subscription includes an Office 365 account.
-
-     > Note: If you already have a subscription, the previous link sends the following message. *Sorry, you can’t add that to your current account*. In that case, use an account from your current Office 365 subscription.
+|     Parameter   |              Value             |
+|----------------:|:-------------------------------|
+|        App type | Web App                        |
+|     Sign on URL | http://localhost:3000          |
+|    Redirect URI | http://localhost:3000/callback |
+| App permissions | Mail.Read                      |
+  
+  Copy and store the **Client ID** and **Client Secret** values.
      
-* A Microsoft Azure subscription to register your application. Azure Active Directory provides identity services for your application. You can use a [Microsoft Azure trial subscription](https://account.windowsazure.com/SignUp).
-
-     > Important: You also need to make sure your Azure subscription is bound to your Office 365 tenant. To do this, see the blog post, [Creating and Managing Multiple Windows Azure Active Directories](http://blogs.technet.com/b/ad/archive/2013/11/08/creating-and-managing-multiple-windows-azure-active-directories.aspx). The section **Adding a new directory** explains how to do this. For more information, see [Associate your Office 365 account with Azure AD to create and manage apps](https://msdn.microsoft.com/office/office365/howto/setup-development-environment#bk_CreateAzureSubscription).
-* A client ID and key of an application registered in Azure. [Add a web application in Azure](https://msdn.microsoft.com/office/office365/HowTo/add-common-consent-manually#bk_RegisterServerApp) and [grant the proper permissions](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/wiki/Grant-permissions-to-the-application-in-Azure) to it.
-
-     > Note: During the app registration process, specify **http://localhost:3000/callback** as the **Sign-on URL**.
-     
-## Configure tunneling software for your localhost
+## Configure a tunnel for your localhost
 
 Microsoft Graph needs a notification URL that it can reach to deliver notifications. The sample uses *localhost* as the development server. Microsoft Graph can't deliver notifications to *localhost*. For this reason, we need a tunnel that can forward requests from an URL on the internet to our *localhost*. For a more detailed explanation, see [Why do I have to use a tunnel?](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/wiki/Why-do-I-have-to-use-a-tunnel%3F). 
-
-> Note: You can also choose to deploy the sample to a cloud service, such as Azure. If you rather deploy this sample to Azure, see [Deploying the sample to Azure
-](https://github.com/OfficeDev/Microsoft-Graph-NodeJs-Webhooks/wiki/Deploying-the-sample-to-Azure).
 
 For this sample, we use [ngrok](https://ngrok.com/) to create the tunnel. To configure ngrok:
 
