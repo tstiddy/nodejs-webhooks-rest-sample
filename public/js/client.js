@@ -8,13 +8,26 @@ var userId;
 
 // Socket `notification_received` event handler.
 socket.on('notification_received', function (mailData) {
-  var newListItem = document.createElement('li');
+  var listItem;
+  var primaryText;
+  var secondaryText;
 
-  var subject = '<b>Subject:</b> ' + mailData.subject;
-  var sender = '<b>From:</b> ' + mailData.sender.emailAddress.address;
+  listItem = document.createElement('div');
+  listItem.className = 'ms-ListItem is-selectable';
+  listItem.onclick = function () {
+    window.open(mailData.webLink, 'outlook');
+  };
 
-  newListItem.innerHTML = subject + '<br />' + sender;
-  document.getElementById('events').appendChild(newListItem);
+  primaryText = document.createElement('span');
+  primaryText.className = 'ms-ListItem-primaryText';
+  primaryText.innerText = mailData.sender.emailAddress.name;
+  secondaryText = document.createElement('span');
+  secondaryText.className = 'ms-ListItem-secondaryText';
+  secondaryText.innerText = mailData.subject;
+  listItem.appendChild(primaryText);
+  listItem.appendChild(secondaryText);
+
+  document.getElementById('notifications').appendChild(listItem);
 });
 
 // When the page first loads, create the socket room
@@ -25,7 +38,10 @@ document.getElementById('subscriptionId').innerHTML = subscriptionId;
 // The page also needs to send the userId to properly
 // sign out the user.
 userId = getQueryStringParameter('userId');
-document.getElementById('signOutLink').href += userId;
+document.getElementById('userId').innerHTML = userId;
+document.getElementById('signOutButton').onclick = function () {
+  location.href = '/signout/' + userId;
+};
 
 function getQueryStringParameter(paramToRetrieve) {
   var params = document.URL.split('?')[1].split('&');
