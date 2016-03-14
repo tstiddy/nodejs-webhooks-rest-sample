@@ -9,13 +9,21 @@
         <meta name="viewport" content="width=device-width">
         <title></title>
         <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/fabric.min.css">
+        <link rel="stylesheet" href="/css/fabric.components.min.css">
     </head>
     <body>
-        <h1>Listen to Webhook Events</h1>
-        <a id="signOutLink" href="/signout/">Sign out</a>
-        <p>Waiting for notifications from subscription <span id="subscriptionId"></span>...</p>
-        <ul id="events"></ul>
+        <div style="text-align: right;">
+        <button id="signOutButton" class="ms-Button ms-Button--command">
+            <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--person"></i></span>
+            <span class="ms-Button-label">Sign out</span>
+            <span class="ms-Button-description">Sign out</span>
+        </button>
+        </div>
+        <h1 class="ms-font-su">Listen to Webhook Notifications</h1>
+        <p class="ms-font-xl">Send an e-mail to <span id="userId"></span> to get a notification</p>
+        <p class="ms-font-xl">Waiting for notifications for subscription <span id="subscriptionId"></span>...</p>
+        <div id="notifications"></div>
         <script type="text/javascript" src="http://localhost:3001/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="/js/client.js"></script>
     </body>
