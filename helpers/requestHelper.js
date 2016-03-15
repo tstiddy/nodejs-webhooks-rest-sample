@@ -25,7 +25,11 @@ function postData(path, token, data, callback) {
   };
 
   var post = https.request(options, function (res) {
-    res.on('data', function (subscriptionData) {
+    var subscriptionData = '';
+    res.on('data', function (chunk) {
+      subscriptionData += chunk;
+    });
+    res.on('end', function () {
       callback(null, JSON.parse(subscriptionData));
     });
   });
@@ -58,7 +62,11 @@ function getData(path, token, callback) {
   };
 
   var get = https.request(options, function (res) {
-    res.on('data', function (endpointData) {
+    var endpointData = '';
+    res.on('data', function (chunk) {
+      endpointData += chunk;
+    });
+    res.on('end', function () {
       callback(null, JSON.parse(endpointData));
     });
   });
