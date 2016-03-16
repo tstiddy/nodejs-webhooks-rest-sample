@@ -24,8 +24,15 @@ router.get('/signin', function (req, res) {
 // and redirects the browser to the dashboard.html page.
 router.get('/callback', function (req, res, next) {
   var subscriptionId;
+  var subscriptionExpirationDateTime;
   authHelper.getTokenFromCode(req.query.code, function (authenticationError, token) {
     if (token) {
+      // Request this subscription to expire one day from now.
+      // Note: 1 day = 86400000 milliseconds
+      // The name of the property coming from the service might change from
+      // subscriptionExpirationDateTime to expirationDateTime in the near future
+      subscriptionExpirationDateTime = new Date(Date.now() + 86400000).toISOString();
+      subscriptionConfiguration.subscriptionExpirationDateTime = subscriptionExpirationDateTime;
       // Make the request to subscription service
       requestHelper.postData(
         '/beta/subscriptions',
