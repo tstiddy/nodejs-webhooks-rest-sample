@@ -9,7 +9,7 @@ var host = 'graph.microsoft.com';
  * Generates a POST request (of Content-type ```application/json```)
  * @param {string} path the path, relative to the host, to which this request will be sent
  * @param {string} token the access token with which the request should be authenticated
- * @param {string} postData the data which will be 'POST'ed
+ * @param {string} data the data which will be 'POST'ed
  * @param {callback} callback
  */
 function postData(path, token, data, callback) {
