@@ -30,7 +30,7 @@ To use the Webhook sample, you need the following:
      
 ## Configure a tunnel for your localhost
 
-The sample uses *localhost* as the development server. For this reason, we need a tunnel that can forward requests from an URL on the internet to our *localhost*. If for any reason, you don't want to use a tunnel, see [Hosting without a tunnel](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/wiki/Hosting-the-sample-without-a-tunnel). If you want a detailed explanation of the reason to use a tunnel, see [Why do I have to use a tunnel?](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/wiki/Why-do-I-have-to-use-a-tunnel)
+The sample uses *localhost* as the development server. For this reason, we need a tunnel that can forward requests from a URL on the internet to our *localhost*. If for any reason, you don't want to use a tunnel, see [Hosting without a tunnel](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/wiki/Hosting-the-sample-without-a-tunnel). If you want a detailed explanation of the reason to use a tunnel, see [Why do I have to use a tunnel?](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/wiki/Why-do-I-have-to-use-a-tunnel)
 
 For this sample, we use [ngrok](https://ngrok.com/) to create the tunnel. To configure ngrok:
 
