@@ -23,6 +23,7 @@ router.get('/signin', function (req, res) {
 // It requests the subscription from Office 365, stores the subscription in a database
 // and redirects the browser to the dashboard.html page.
 router.get('/callback', function (req, res, next) {
+  var subscriptionId;
   authHelper.getTokenFromCode(req.query.code, function (authenticationError, token) {
     if (token) {
       // Make the request to subscription service
@@ -35,8 +36,11 @@ router.get('/callback', function (req, res, next) {
             subscriptionData.userId = token.userId;
             subscriptionData.accessToken = token.accessToken;
             dbHelper.saveSubscription(subscriptionData, null);
+            // The name of the property coming from the service might change from
+            // subscriptionId to id in the near future
+            subscriptionId = subscriptionData.subscriptionId || subscriptionData.id;
             res.redirect(
-              '/dashboard.html?subscriptionId=' + subscriptionData.subscriptionId +
+              '/dashboard.html?subscriptionId=' + subscriptionId +
               '&userId=' + subscriptionData.userId
             );
           } else if (requestError) {

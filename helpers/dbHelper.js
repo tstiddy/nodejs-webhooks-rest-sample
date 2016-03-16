@@ -73,25 +73,33 @@ dbHelper.prototype.getSubscription = function getSubscription(subscriptionId, ca
 dbHelper.prototype.saveSubscription =
   function saveSubscription(subscriptionData, callback) {
     var db = new sqlite3.Database(dbFile);
+    var subscriptionId;
+    var subscriptionExpirationDateTime;
     var insertStatement =
       'INSERT INTO Subscription ' +
         '(UserId, SubscriptionId, AccessToken, Resource, ChangeType, ' +
         'ClientState, NotificationUrl, SubscriptionExpirationDateTime) ' +
         'VALUES ($userId, $subscriptionId, $accessToken, $resource, $changeType, ' +
         '$clientState, $notificationUrl, $subscriptionExpirationDateTime)';
+        
+    // The name of the property coming from the service might change from
+    // subscriptionId/subscriptionExpirationDateTime to id/expirationDateTime
+    subscriptionId = subscriptionData.subscriptionId || subscriptionData.id;
+    subscriptionExpirationDateTime = 
+      subscriptionData.subscriptionExpirationDateTime || subscriptionData.expirationDateTime; 
 
     db.serialize(function executeInsert() {
       db.run(
         insertStatement,
         {
           $userId: subscriptionData.userId,
-          $subscriptionId: subscriptionData.subscriptionId,
+          $subscriptionId: subscriptionId,
           $accessToken: subscriptionData.accessToken,
           $resource: subscriptionData.resource,
           $clientState: subscriptionData.clientState,
           $changeType: subscriptionData.changeType,
           $notificationUrl: subscriptionData.notificationUrl,
-          $subscriptionExpirationDateTime: subscriptionData.subscriptionExpirationDateTime
+          $subscriptionExpirationDateTime: subscriptionExpirationDateTime
         },
           callback
       );
