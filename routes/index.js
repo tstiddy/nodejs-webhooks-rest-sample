@@ -23,8 +23,16 @@ router.get('/signin', function (req, res) {
 // It requests the subscription from Office 365, stores the subscription in a database
 // and redirects the browser to the dashboard.html page.
 router.get('/callback', function (req, res, next) {
+  var subscriptionId;
+  var subscriptionExpirationDateTime;
   authHelper.getTokenFromCode(req.query.code, function (authenticationError, token) {
     if (token) {
+      // Request this subscription to expire one day from now.
+      // Note: 1 day = 86400000 milliseconds
+      // The name of the property coming from the service might change from
+      // subscriptionExpirationDateTime to expirationDateTime in the near future
+      subscriptionExpirationDateTime = new Date(Date.now() + 86400000).toISOString();
+      subscriptionConfiguration.subscriptionExpirationDateTime = subscriptionExpirationDateTime;
       // Make the request to subscription service
       requestHelper.postData(
         '/beta/subscriptions',
@@ -35,8 +43,11 @@ router.get('/callback', function (req, res, next) {
             subscriptionData.userId = token.userId;
             subscriptionData.accessToken = token.accessToken;
             dbHelper.saveSubscription(subscriptionData, null);
+            // The name of the property coming from the service might change from
+            // subscriptionId to id in the near future
+            subscriptionId = subscriptionData.subscriptionId || subscriptionData.id;
             res.redirect(
-              '/dashboard.html?subscriptionId=' + subscriptionData.subscriptionId +
+              '/dashboard.html?subscriptionId=' + subscriptionId +
               '&userId=' + subscriptionData.userId
             );
           } else if (requestError) {

@@ -76,8 +76,6 @@ Office 365 development questions? Post them to [Stack Overflow](http://stackover
   
 ## Additional resources
 
-* [Office 365 APIs platform overview](https://msdn.microsoft.com/office/office365/howto/platform-development-overview)
-* [Getting started with Office 365 APIs](http://dev.office.com/getting-started/office365apis)
 * [Overview of Microsoft Graph](http://graph.microsoft.io/)
 * [Subscription reference documentation](https://graph.microsoft.io/en-us/docs/api-reference/beta/resources/subscription)
 
