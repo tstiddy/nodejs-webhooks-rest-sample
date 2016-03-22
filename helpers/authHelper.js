@@ -9,7 +9,7 @@ var resource = 'https://graph.microsoft.com/';
 
 /**
  * Generate a fully formed uri to use for authentication based on the supplied resource argument
- * @return {string} a fully formed uri with which authentcation can be completed
+ * @return {string} a fully formed uri with which authentication can be completed.
  */
 function getAuthUrl() {
   return adalConfiguration.authority + '/oauth2/authorize' +

@@ -30,7 +30,7 @@ socket.on('notification_received', function (mailData) {
   document.getElementById('notifications').appendChild(listItem);
 });
 
-// When the page first loads, create the socket room
+// When the page first loads, create the socket room.
 subscriptionId = getQueryStringParameter('subscriptionId');
 socket.emit('create_room', subscriptionId);
 document.getElementById('subscriptionId').innerHTML = subscriptionId;

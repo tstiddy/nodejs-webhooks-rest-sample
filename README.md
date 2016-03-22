@@ -1,12 +1,12 @@
 # Microsoft Graph Webhooks Sample for Node.js
 
-This Node.js sample shows how to start getting notifications from Microsoft Graph. The following are common tasks that a web application performs with Microsoft Graph webhooks:
+This Node.js sample shows how to start getting notifications from Microsoft Graph. The following are common tasks that a web application performs with Microsoft Graph webhooks.
 
-1. Sign-in your users with their work or school account to get an access token.
-2. Use the access token to create a webhook subscription.
-3. Send back a validation token to confirm the notification URL.
-4. Listen for notifications from Microsoft Graph.
-5. Request for more information in Office 365 using data in the notification.
+* Sign-in your users with their work or school account to get an access token.
+* Use the access token to create a webhook subscription.
+* Send back a validation token to confirm the notification URL.
+* Listen for notifications from Microsoft Graph.
+* Request for more information in Microsoft Office 365 using data in the notification.
   
 ![Microsoft Graph Webhook Sample for Node.js screenshot](/readme-images/Microsoft-Graph-NodeJs-Webhooks.png)
 
@@ -17,7 +17,7 @@ The previous screenshot shows the app in action. After your app gets a subscript
 To use the Webhook sample, you need the following:
 
 * [Node.js](https://nodejs.org/) version 4 or 5.
-* An app registered in Azure. You can use the [Office 365 app registration tool](http://dev.office.com/app-registration). It simplifies app registration. Use the following parameters:
+* An app registered in Microsoft Azure. You can use the [Office 365 app registration tool](http://dev.office.com/app-registration). It simplifies app registration. Use the following parameters:
 
 |     Parameter   |              Value             |
 |----------------:|:-------------------------------|
@@ -30,16 +30,16 @@ To use the Webhook sample, you need the following:
      
 ## Configure a tunnel for your localhost
 
-The sample uses *localhost* as the development server. For this reason, we need a tunnel that can forward requests from a URL on the internet to our *localhost*. If for any reason, you don't want to use a tunnel, see [Hosting without a tunnel](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/wiki/Hosting-the-sample-without-a-tunnel). If you want a detailed explanation of the reason to use a tunnel, see [Why do I have to use a tunnel?](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/wiki/Why-do-I-have-to-use-a-tunnel)
+The sample uses *localhost* as the development server. For this reason, we need a tunnel that can forward requests from a URL on the Internet to our *localhost*. If for any reason, you don't want to use a tunnel, see [Hosting without a tunnel](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/wiki/Hosting-the-sample-without-a-tunnel). If you want a detailed explanation about why to use a tunnel, see [Why do I have to use a tunnel?](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/wiki/Why-do-I-have-to-use-a-tunnel)
 
 For this sample, we use [ngrok](https://ngrok.com/) to create the tunnel. To configure ngrok:
 
 1. [Download](https://ngrok.com/download) and unzip the ngrok binaries for your platform.
-2. Type the following command
+2. Type the following command:
     
     `ngrok http 3000`
     
-3. Take note of the *https public URL* that ngrok provides for you. This is an example
+3. Take note of the *https public URL* that ngrok provides for you. This is an example:
 
     `https://NGROK_ID.ngrok.io`
 
@@ -64,7 +64,7 @@ You'll need the *NGROK_ID* value in the next section.
     ```
     npm run debug
     ```
-    You can attach the Visual Studio Code debugger. For more information, see [Debugging in Visual Studio Code](https://code.visualstudio.com/Docs/editor/debugging).
+    You can attach the debugger included in Microsoft Visual Studio Code. For more information, see [Debugging in Visual Studio Code](https://code.visualstudio.com/Docs/editor/debugging).
     
 7. Open a browser and go to http://localhost:3000. 
 
