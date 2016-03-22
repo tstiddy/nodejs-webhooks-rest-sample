@@ -20,7 +20,7 @@ router.get('/signin', function (req, res) {
 });
 
 // This route gets called at the end of the authentication flow.
-// It requests the subscription from Office 365, stores the subscription in a database
+// It requests the subscription from Office 365, stores the subscription in a database,
 // and redirects the browser to the dashboard.html page.
 router.get('/callback', function (req, res, next) {
   var subscriptionId;
@@ -30,10 +30,10 @@ router.get('/callback', function (req, res, next) {
       // Request this subscription to expire one day from now.
       // Note: 1 day = 86400000 milliseconds
       // The name of the property coming from the service might change from
-      // subscriptionExpirationDateTime to expirationDateTime in the near future
+      // subscriptionExpirationDateTime to expirationDateTime in the near future.
       subscriptionExpirationDateTime = new Date(Date.now() + 86400000).toISOString();
       subscriptionConfiguration.subscriptionExpirationDateTime = subscriptionExpirationDateTime;
-      // Make the request to subscription service
+      // Make the request to subscription service.
       requestHelper.postData(
         '/beta/subscriptions',
         token.accessToken,
@@ -44,7 +44,7 @@ router.get('/callback', function (req, res, next) {
             subscriptionData.accessToken = token.accessToken;
             dbHelper.saveSubscription(subscriptionData, null);
             // The name of the property coming from the service might change from
-            // subscriptionId to id in the near future
+            // subscriptionId to id in the near future.
             subscriptionId = subscriptionData.subscriptionId || subscriptionData.id;
             res.redirect(
               '/dashboard.html?subscriptionId=' + subscriptionId +
@@ -65,7 +65,7 @@ router.get('/callback', function (req, res, next) {
 
 // This route signs out the users by performing these tasks
 // Delete the subscription data from the database
-// Redirect the browser to the logout endpoint
+// Redirect the browser to the logout endpoint.
 router.get('/signout/:userId', function (req, res) {
   var redirectUri = req.protocol + '://' + req.hostname + ':' + req.app.settings.port;
   dbHelper.deleteSubscription(req.params.userId, null);

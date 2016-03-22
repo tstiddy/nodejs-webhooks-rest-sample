@@ -10,7 +10,7 @@ var dbFile = './helpers/database.sqlite3';
 function dbHelper() { }
 
 /**
- * Create SQLite3 table Subscription
+ * Create SQLite3 table Subscription.
  */
 dbHelper.prototype.createDatabase = function createDatabase() {
   var dbExists = fs.existsSync(dbFile);
@@ -81,12 +81,12 @@ dbHelper.prototype.saveSubscription =
         'ClientState, NotificationUrl, SubscriptionExpirationDateTime) ' +
         'VALUES ($userId, $subscriptionId, $accessToken, $resource, $changeType, ' +
         '$clientState, $notificationUrl, $subscriptionExpirationDateTime)';
-        
+
     // The name of the property coming from the service might change from
-    // subscriptionId/subscriptionExpirationDateTime to id/expirationDateTime
+    // subscriptionId/subscriptionExpirationDateTime to id/expirationDateTime.
     subscriptionId = subscriptionData.subscriptionId || subscriptionData.id;
-    subscriptionExpirationDateTime = 
-      subscriptionData.subscriptionExpirationDateTime || subscriptionData.expirationDateTime; 
+    subscriptionExpirationDateTime =
+      subscriptionData.subscriptionExpirationDateTime || subscriptionData.expirationDateTime;
 
     db.serialize(function executeInsert() {
       db.run(
