@@ -32,7 +32,7 @@ router.get('/callback', function (req, res, next) {
       // The name of the property coming from the service might change from
       // subscriptionExpirationDateTime to expirationDateTime in the near future.
       subscriptionExpirationDateTime = new Date(Date.now() + 86400000).toISOString();
-      subscriptionConfiguration.subscriptionExpirationDateTime = subscriptionExpirationDateTime;
+      subscriptionConfiguration.expirationDateTime = subscriptionExpirationDateTime;
       // Make the request to subscription service.
       requestHelper.postData(
         '/beta/subscriptions',
@@ -45,7 +45,7 @@ router.get('/callback', function (req, res, next) {
             dbHelper.saveSubscription(subscriptionData, null);
             // The name of the property coming from the service might change from
             // subscriptionId to id in the near future.
-            subscriptionId = subscriptionData.subscriptionId || subscriptionData.id;
+            subscriptionId = subscriptionData.id;
             res.redirect(
               '/dashboard.html?subscriptionId=' + subscriptionId +
               '&userId=' + subscriptionData.userId

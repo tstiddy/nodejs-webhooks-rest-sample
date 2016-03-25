@@ -43,8 +43,8 @@ router.post('/', function (req, res, next) {
     // process the notification
     if (clientStatesValid) {
       for (i = 0; i < req.body.value.length; i++) {
-        resource = req.body.value[i].resource;
-        subscriptionId = req.body.value[i].subscriptionId;
+        resource = req.body.value[i].Resource;
+        subscriptionId = req.body.value[i].SubscriptionId;
         processNotification(subscriptionId, resource, res, next);
       }
       // Send a status of 'Accepted'
