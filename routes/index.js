@@ -68,7 +68,25 @@ router.get('/callback', function (req, res, next) {
 // Redirect the browser to the logout endpoint.
 router.get('/signout/:subscriptionId', function (req, res) {
   var redirectUri = req.protocol + '://' + req.hostname + ':' + req.app.settings.port;
-  dbHelper.deleteSubscription(req.params.subscriptionId, null);
+
+  // Delete the subscription from Microsoft Graph
+  dbHelper.getSubscription(req.params.subscriptionId, function (dbError, subscriptionData, next) {
+    if (subscriptionData) {
+      requestHelper.deleteData(
+        '/beta/subscriptions/' + req.params.subscriptionId,
+        subscriptionData.accessToken,
+        function (error) {
+          if (!error) {
+            dbHelper.deleteSubscription(req.params.subscriptionId, null);
+          }
+        }
+      );
+    } else if (dbError) {
+      res.status(500);
+      next(dbError);
+    }
+  });
+
   res.redirect('https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=' + redirectUri);
 });
 

@@ -24,7 +24,7 @@ function postData(path, token, data, callback) {
     }
   };
 
-  var post = https.request(options, function (res) {
+  var req = https.request(options, function (res) {
     var subscriptionData = '';
     res.on('data', function (chunk) {
       subscriptionData += chunk;
@@ -34,10 +34,10 @@ function postData(path, token, data, callback) {
     });
   });
 
-  post.write(data);
-  post.end();
+  req.write(data);
+  req.end();
 
-  post.on('error', function (error) {
+  req.on('error', function (error) {
     callback(error, null);
   });
 }
@@ -61,7 +61,7 @@ function getData(path, token, callback) {
     }
   };
 
-  var get = https.request(options, function (res) {
+  var req = https.request(options, function (res) {
     var endpointData = '';
     res.on('data', function (chunk) {
       endpointData += chunk;
@@ -71,12 +71,49 @@ function getData(path, token, callback) {
     });
   });
 
-  get.end();
+  req.write('');
+  req.end();
 
-  get.on('error', function (error) {
+  req.on('error', function (error) {
     callback(error, null);
+  });
+}
+
+/**
+ * Generates a DELETE request
+ * @param {string} path the path, relative to the host, to which this request will be sent
+ * @param {string} token the acess token with which the request should be authenticated
+ * @param {callback} callback
+ */
+function deleteData(path, token, callback) {
+  var options = {
+    host: host,
+    path: path,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/plain',
+      'X-HTTP-Method': 'DELETE',
+      Authorization: 'Bearer ' + token
+    }
+  };
+
+  var req = https.request(options, function (res) {
+    var endpointData = '';
+    res.on('data', function (chunk) {
+      endpointData += chunk;
+    });
+    res.on('end', function () {
+      callback(null);
+    });
+  });
+
+  req.end();
+
+  req.on('error', function (error) {
+    callback(error);
   });
 }
 
 exports.postData = postData;
 exports.getData = getData;
+exports.deleteData = deleteData;
