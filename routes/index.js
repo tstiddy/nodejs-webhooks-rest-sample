@@ -66,9 +66,9 @@ router.get('/callback', function (req, res, next) {
 // This route signs out the users by performing these tasks
 // Delete the subscription data from the database
 // Redirect the browser to the logout endpoint.
-router.get('/signout/:userId', function (req, res) {
+router.get('/signout/:subscriptionId', function (req, res) {
   var redirectUri = req.protocol + '://' + req.hostname + ':' + req.app.settings.port;
-  dbHelper.deleteSubscription(req.params.userId, null);
+  dbHelper.deleteSubscription(req.params.subscriptionId, null);
   res.redirect('https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=' + redirectUri);
 });
 

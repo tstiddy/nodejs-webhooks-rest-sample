@@ -99,16 +99,16 @@ dbHelper.prototype.saveSubscription =
   };
 
 dbHelper.prototype.deleteSubscription =
-  function deleteSubscription(userId, callback) {
+  function deleteSubscription(subscriptionId, callback) {
     var db = new sqlite3.Database(dbFile);
     var deleteStatement = 'DELETE FROM Subscription WHERE ' +
-                        'UserId = $userId';
+                        'SubscriptionId = $subscriptionId';
 
     db.serialize(function executeDelete() {
       db.run(
         deleteStatement,
         {
-          $userId: userId
+          $subscriptionId: subscriptionId
         },
         callback
       );

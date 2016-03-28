@@ -40,7 +40,7 @@ document.getElementById('subscriptionId').innerHTML = subscriptionId;
 userId = getQueryStringParameter('userId');
 document.getElementById('userId').innerHTML = userId;
 document.getElementById('signOutButton').onclick = function () {
-  location.href = '/signout/' + userId;
+  location.href = '/signout/' + subscriptionId;
 };
 
 function getQueryStringParameter(paramToRetrieve) {
