@@ -30,7 +30,11 @@ function postData(path, token, data, callback) {
       subscriptionData += chunk;
     });
     res.on('end', function () {
-      callback(null, JSON.parse(subscriptionData));
+      if (res.statusCode === 201) {
+        callback(null, JSON.parse(subscriptionData));
+      } else {
+        callback(JSON.parse(subscriptionData), null);
+      }
     });
   });
 
@@ -67,7 +71,11 @@ function getData(path, token, callback) {
       endpointData += chunk;
     });
     res.on('end', function () {
-      callback(null, JSON.parse(endpointData));
+      if (res.statusCode === 200) {
+        callback(null, JSON.parse(endpointData));
+      } else {
+        callback(JSON.parse(endpointData), null);
+      }
     });
   });
 
