@@ -67,7 +67,14 @@ You'll need the *NGROK_ID* value in the next section.
     ```
     You can attach the debugger included in Microsoft Visual Studio Code. For more information, see [Debugging in Visual Studio Code](https://code.visualstudio.com/Docs/editor/debugging).
     
-7. Open a browser and go to http://localhost:3000. 
+7. Open a browser and go to http://localhost:3000.
+
+<a name="contributing"></a>
+## Contributing ##
+
+If you'd like to contribute to this sample, see [CONTRIBUTING.MD](/CONTRIBUTING.md).
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ## Questions and comments
 
