@@ -1,5 +1,5 @@
 # Microsoft Graph Webhooks Sample for Node.js
-[![Build Status](https://travis-ci.org/OfficeDev/Microsoft-Graph-Nodejs-Webhooks.svg)](https://travis-ci.org/OfficeDev/Microsoft-Graph-Nodejs-Webhooks)
+[![Build Status](https://travis-ci.org/microsoftgraph/nodejs-webhooks-rest-sample.svg)](https://travis-ci.org/microsoftgraph/nodejs-webhooks-rest-sample)
 
 This Node.js sample shows how to start getting notifications from Microsoft Graph. The following are common tasks that a web application performs with Microsoft Graph webhooks.
 
