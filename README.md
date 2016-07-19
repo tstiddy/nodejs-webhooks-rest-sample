@@ -1,5 +1,5 @@
 # Microsoft Graph Webhooks Sample for Node.js
-[![Build Status](https://travis-ci.org/OfficeDev/Microsoft-Graph-Nodejs-Webhooks.svg)](https://travis-ci.org/OfficeDev/Microsoft-Graph-Nodejs-Webhooks)
+[![Build Status](https://travis-ci.org/microsoftgraph/nodejs-webhooks-rest-sample.svg)](https://travis-ci.org/microsoftgraph/nodejs-webhooks-rest-sample)
 
 This Node.js sample shows how to start getting notifications from Microsoft Graph. The following are common tasks that a web application performs with Microsoft Graph webhooks.
 
@@ -67,7 +67,14 @@ You'll need the *NGROK_ID* value in the next section.
     ```
     You can attach the debugger included in Microsoft Visual Studio Code. For more information, see [Debugging in Visual Studio Code](https://code.visualstudio.com/Docs/editor/debugging).
     
-7. Open a browser and go to http://localhost:3000. 
+7. Open a browser and go to http://localhost:3000.
+
+<a name="contributing"></a>
+## Contributing ##
+
+If you'd like to contribute to this sample, see [CONTRIBUTING.MD](/CONTRIBUTING.md).
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ## Questions and comments
 
