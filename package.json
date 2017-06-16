@@ -8,22 +8,22 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "adal-node": "^0.1.18",
-    "body-parser": "^1.13.3",
-    "express": "^4.13.3",
-    "pug": "^2.0.0-alpha3",
-    "morgan": "^1.6.1",
-    "serve-favicon": "^2.3.0",
-    "socket.io": "^1.4.5",
-    "sqlite3": "^3.1.1"
+    "adal-node": "0.1.22",
+    "body-parser": "1.17.2",
+    "express": "4.15.3",
+    "pug": "2.0.0-rc.2",
+    "morgan": "1.8.2",
+    "serve-favicon": "2.4.3",
+    "socket.io": "2.0.3",
+    "sqlite3": "3.1.8"
   },
   "devDependencies": {
-    "eslint": "^2.3.0",
-    "eslint-config-airbnb": "^6.1.0",
-    "eslint-plugin-react": "^4.2.1",
-    "gulp": "^3.9.0",
-    "gulp-nodemon": "^2.0.2",
-    "gulp-plumber": "^1.0.0",
-    "mocha": "^2.4.5"
+    "eslint": "4.0.0",
+    "eslint-config-airbnb": "15.0.1",
+    "eslint-plugin-react": "7.1.0",
+    "gulp": "3.9.1",
+    "gulp-nodemon": "2.2.1",
+    "gulp-plumber": "1.1.0",
+    "mocha": "3.4.2"
   }
 }
