@@ -3,15 +3,16 @@
  * See LICENSE in the project root for license information.
  */
 
-var AuthenticationContext = require('adal-node').AuthenticationContext;
-var adalConfiguration = require('../constants.js').adalConfiguration;
-var resource = 'https://graph.microsoft.com/';
+import { AuthenticationContext } from 'adal-node';
+import { adalConfiguration } from '../constants';
+
+const resource = 'https://graph.microsoft.com/';
 
 /**
  * Generate a fully formed uri to use for authentication based on the supplied resource argument
  * @return {string} a fully formed uri with which authentication can be completed.
  */
-function getAuthUrl() {
+export function getAuthUrl() {
   return adalConfiguration.authority + '/oauth2/authorize' +
     '?client_id=' + adalConfiguration.clientID +
     '&response_type=code' +
@@ -24,15 +25,15 @@ function getAuthUrl() {
  * @param {string} res A URI that identifies the resource for which the token is valid.
  * @param {AcquireTokenCallback} callback The callback function.
  */
-function getTokenFromCode(code, callback) {
-  var authContext = new AuthenticationContext(adalConfiguration.authority);
+export function getTokenFromCode(code, callback) {
+  const authContext = new AuthenticationContext(adalConfiguration.authority);
   authContext.acquireTokenWithAuthorizationCode(
     code,
     adalConfiguration.redirectUri,
     resource,
     adalConfiguration.clientID,
     adalConfiguration.clientSecret,
-    function (error, token) {
+    (error, token) => {
       if (error) {
         callback(error, null);
       } else {
@@ -41,6 +42,3 @@ function getTokenFromCode(code, callback) {
     }
   );
 }
-
-exports.getAuthUrl = getAuthUrl;
-exports.getTokenFromCode = getTokenFromCode;

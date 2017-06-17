@@ -2,17 +2,19 @@
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
  */
-var express = require('express');
-var socketServer = require('http').createServer(express);
-var io = require('socket.io')(socketServer);
+
+import express from 'express';
+import http from 'http';
+import io from 'socket.io';
+
+const socketServer = http.createServer(express);
+export const ioServer = io(socketServer);
 
 socketServer.listen(3001);
 
 // Socket event
-io.on('connection', function (socket) {
-  socket.on('create_room', function (subscriptionId) {
+ioServer.on('connection', socket => {
+  socket.on('create_room', subscriptionId => {
     socket.join(subscriptionId);
   });
 });
-
-module.exports = io;
