@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-var app = require('../app');
 
-var dbHelper = new (require('../helpers/dbHelper'))();
-dbHelper.createDatabase();
+import { app } from '../app';
+import { createDatabase } from '../helpers/dbHelper';
+
+createDatabase();
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function() {
+const server = app.listen(app.get('port'), () => {
   console.log('Express server listening on port ' + server.address().port);
 });

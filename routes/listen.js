@@ -2,21 +2,25 @@
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
  */
-var express = require('express');
-var router = express.Router();
-var io = require('../helpers/socketHelper.js');
-var requestHelper = require('../helpers/requestHelper.js');
-var dbHelper = new (require('../helpers/dbHelper'))();
-var http = require('http');
-var clientStateValueExpected = require('../constants').subscriptionConfiguration.clientState;
+
+import express from 'express';
+import http from 'http';
+
+import { ioServer } from '../helpers/socketHelper';
+import { getData } from '../helpers/requestHelper';
+import { subscriptionConfiguration } from '../constants';
+
+const clientStateValueExpected = subscriptionConfiguration.clientState;
+
+import { getSubscription } from '../helpers/dbHelper';
+
+export const listenRouter = express.Router();
 
 /* Default listen route */
-router.post('/', function (req, res, next) {
-  var status;
-  var clientStatesValid;
-  var i;
-  var resource;
-  var subscriptionId;
+listenRouter.post('/', (req, res, next) => {
+  let status;
+  let clientStatesValid;
+
   // If there's a validationToken parameter in the query string,
   // then this is the request that Office 365 sends to check
   // that this is a valid endpoint.
@@ -29,7 +33,7 @@ router.post('/', function (req, res, next) {
     clientStatesValid = false;
 
     // First, validate all the clientState values in array
-    for (i = 0; i < req.body.value.length; i++) {
+    for (let i = 0; i < req.body.value.length; i++) {
       if (req.body.value[i].clientState !== clientStateValueExpected) {
         // If just one clientState is invalid, we discard the whole batch
         clientStatesValid = false;
@@ -39,12 +43,11 @@ router.post('/', function (req, res, next) {
       }
     }
 
-    // If all the clientStates are valid, then
-    // process the notification
+    // If all the clientStates are valid, then process the notification
     if (clientStatesValid) {
-      for (i = 0; i < req.body.value.length; i++) {
-        resource = req.body.value[i].resource;
-        subscriptionId = req.body.value[i].subscriptionId;
+      for (let i = 0; i < req.body.value.length; i++) {
+        const resource = req.body.value[i].resource;
+        const subscriptionId = req.body.value[i].subscriptionId;
         processNotification(subscriptionId, resource, res, next);
       }
       // Send a status of 'Accepted'
@@ -65,13 +68,14 @@ router.post('/', function (req, res, next) {
 // Retrieve the actual mail message data from Office 365.
 // Send the message data to the socket.
 function processNotification(subscriptionId, resource, res, next) {
-  dbHelper.getSubscription(subscriptionId, function (dbError, subscriptionData) {
+  getSubscription(subscriptionId, (dbError, subscriptionData) => {
     if (subscriptionData) {
-      requestHelper.getData(
-        '/beta/' + resource, subscriptionData.accessToken,
-        function (requestError, endpointData) {
+      getData(
+        `/beta/${resource}`,
+        subscriptionData.accessToken,
+        (requestError, endpointData) => {
           if (endpointData) {
-            io.to(subscriptionId).emit('notification_received', endpointData);
+            ioServer.to(subscriptionId).emit('notification_received', endpointData);
           } else if (requestError) {
             res.status(500);
             next(requestError);
@@ -84,5 +88,3 @@ function processNotification(subscriptionId, resource, res, next) {
     }
   });
 }
-
-module.exports = router;

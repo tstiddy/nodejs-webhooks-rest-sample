@@ -9,7 +9,7 @@ This Node.js sample shows how to start getting notifications from Microsoft Grap
 * Listen for notifications from Microsoft Graph.
 * Request for more information in Microsoft Office 365 using data in the notification.
   
-![Microsoft Graph Webhook Sample for Node.js screenshot](/readme-images/Microsoft-Graph-NodeJs-Webhooks.png)
+![Microsoft Graph Webhook Sample for Node.js screenshot](https://user-images.githubusercontent.com/3375461/27248965-40a3e74c-52c0-11e7-95bf-6963696e3d3a.png)
 
 The previous screenshot shows the app in action. After your app gets a subscription, your app gets a notification when events happen in user data. Your app can then react to the event. This sample writes a list item for every notification received by the notification URL.
 

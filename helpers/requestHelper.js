@@ -2,8 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
  */
-var https = require('https');
-var host = 'graph.microsoft.com';
+
+import https from 'https';
+
+const host = 'graph.microsoft.com';
 
 /**
  * Generates a POST request (of Content-type ```application/json```)
@@ -12,8 +14,8 @@ var host = 'graph.microsoft.com';
  * @param {string} data the data which will be 'POST'ed
  * @param {callback} callback
  */
-function postData(path, token, data, callback) {
-  var options = {
+export function postData(path, token, data, callback) {
+  const options = {
     host: host,
     path: path,
     method: 'POST',
@@ -24,12 +26,12 @@ function postData(path, token, data, callback) {
     }
   };
 
-  var req = https.request(options, function (res) {
-    var subscriptionData = '';
-    res.on('data', function (chunk) {
+  const req = https.request(options, res => {
+    let subscriptionData = '';
+    res.on('data', chunk => {
       subscriptionData += chunk;
     });
-    res.on('end', function () {
+    res.on('end', () => {
       if (res.statusCode === 201) {
         callback(null, JSON.parse(subscriptionData));
       } else {
@@ -41,7 +43,7 @@ function postData(path, token, data, callback) {
   req.write(data);
   req.end();
 
-  req.on('error', function (error) {
+  req.on('error', error => {
     callback(error, null);
   });
 }
@@ -52,8 +54,8 @@ function postData(path, token, data, callback) {
  * @param {string} token the acess token with which the request should be authenticated
  * @param {callback} callback
  */
-function getData(path, token, callback) {
-  var options = {
+export function getData(path, token, callback) {
+  const options = {
     host: host,
     path: path,
     method: 'GET',
@@ -65,12 +67,12 @@ function getData(path, token, callback) {
     }
   };
 
-  var req = https.request(options, function (res) {
-    var endpointData = '';
-    res.on('data', function (chunk) {
+  const req = https.request(options, res => {
+    let endpointData = '';
+    res.on('data', chunk => {
       endpointData += chunk;
     });
-    res.on('end', function () {
+    res.on('end', () => {
       if (res.statusCode === 200) {
         callback(null, JSON.parse(endpointData));
       } else {
@@ -82,7 +84,7 @@ function getData(path, token, callback) {
   req.write('');
   req.end();
 
-  req.on('error', function (error) {
+  req.on('error', error => {
     callback(error, null);
   });
 }
@@ -93,8 +95,8 @@ function getData(path, token, callback) {
  * @param {string} token the acess token with which the request should be authenticated
  * @param {callback} callback
  */
-function deleteData(path, token, callback) {
-  var options = {
+export function deleteData(path, token, callback) {
+  const options = {
     host: host,
     path: path,
     method: 'POST',
@@ -105,23 +107,19 @@ function deleteData(path, token, callback) {
     }
   };
 
-  var req = https.request(options, function (res) {
-    var endpointData = '';
-    res.on('data', function (chunk) {
+  const req = https.request(options, res => {
+    let endpointData = '';
+    res.on('data', chunk => {
       endpointData += chunk;
     });
-    res.on('end', function () {
+    res.on('end', () => {
       callback(null);
     });
   });
 
   req.end();
 
-  req.on('error', function (error) {
+  req.on('error', error => {
     callback(error);
   });
 }
-
-exports.postData = postData;
-exports.getData = getData;
-exports.deleteData = deleteData;
