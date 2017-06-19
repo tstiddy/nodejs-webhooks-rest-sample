@@ -1,14 +1,9 @@
-/*
- * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
 import express from 'express';
 
+import { getSubscription, saveSubscription, deleteSubscription } from '../helpers/dbHelper';
 import { getAuthUrl, getTokenFromCode } from '../helpers/authHelper';
 import { postData, deleteData } from '../helpers/requestHelper';
 import { subscriptionConfiguration } from '../constants';
-import { getSubscription, saveSubscription, deleteSubscription } from '../helpers/dbHelper';
 
 export const authRouter = express.Router();
 
@@ -24,7 +19,7 @@ authRouter.get('/signin', (req, res) => {
 
 // This route gets called at the end of the authentication flow.
 // It requests the subscription from Office 365, stores the subscription in a database,
-// and redirects the browser to the dashboard.html page.
+// and redirects the browser to the home page.
 authRouter.get('/callback', (req, res, next) => {
   getTokenFromCode(req.query.code, (authenticationError, token) => {
     if (token) {
@@ -46,7 +41,7 @@ authRouter.get('/callback', (req, res, next) => {
             // The name of the property coming from the service might change from
             // subscriptionId to id in the near future.
             res.redirect(
-              '/dashboard.html?subscriptionId=' + subscriptionData.id +
+              '/home.html?subscriptionId=' + subscriptionData.id +
               '&userId=' + subscriptionData.userId
             );
           } else if (requestError) {

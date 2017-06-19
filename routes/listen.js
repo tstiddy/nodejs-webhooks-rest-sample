@@ -1,18 +1,10 @@
-/*
- * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
 import express from 'express';
 import http from 'http';
 
 import { ioServer } from '../helpers/socketHelper';
 import { getData } from '../helpers/requestHelper';
-import { subscriptionConfiguration } from '../constants';
-
-const clientStateValueExpected = subscriptionConfiguration.clientState;
-
 import { getSubscription } from '../helpers/dbHelper';
+import { subscriptionConfiguration } from '../constants';
 
 export const listenRouter = express.Router();
 
@@ -34,6 +26,8 @@ listenRouter.post('/', (req, res, next) => {
 
     // First, validate all the clientState values in array
     for (let i = 0; i < req.body.value.length; i++) {
+      const clientStateValueExpected = subscriptionConfiguration.clientState;
+
       if (req.body.value[i].clientState !== clientStateValueExpected) {
         // If just one clientState is invalid, we discard the whole batch
         clientStatesValid = false;

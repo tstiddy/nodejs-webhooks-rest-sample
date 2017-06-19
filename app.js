@@ -1,8 +1,3 @@
-/*
- * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
 import express from 'express';
 import path from 'path';
 import favicon from 'serve-favicon';
@@ -22,7 +17,6 @@ app.locals.ENV_DEVELOPMENT = (env === 'development');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -52,15 +46,15 @@ if (app.get('env') === 'development') {
       title: 'error'
     });
   });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use((err, req, res) => {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: { },
-    title: 'error'
+} else {
+  // production error handler
+  // no stacktraces leaked to user
+  app.use((err, req, res) => {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: { },
+      title: 'error'
+    });
   });
-});
+}

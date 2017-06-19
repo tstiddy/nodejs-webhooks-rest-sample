@@ -1,8 +1,3 @@
-/*
- * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
 import fs from 'fs';
 import sql from 'sqlite3';
 
@@ -27,15 +22,13 @@ export function createDatabase() {
     'SubscriptionExpirationDateTime TEXT NOT NULL' +
     ')';
 
-  db.serialize(function createTable() {
+  db.serialize(() => {
     if (!dbExists) {
       db.run(
         createSubscriptionStatement,
         [],
-        function callback(error) {
-          if (error !== null) {
-            throw error;
-          }
+        error => {
+          if (error !== null) throw error;
         }
       );
     }
@@ -59,7 +52,7 @@ export function getSubscription(subscriptionId, callback) {
     'WHERE SubscriptionId = $subscriptionId ' +
     'AND SubscriptionExpirationDateTime > datetime(\'now\')';
 
-  db.serialize(function executeSelect() {
+  db.serialize(() => {
     db.get(
       getUserDataStatement,
       {
@@ -79,7 +72,7 @@ export function saveSubscription(subscriptionData, callback) {
     'VALUES ($userId, $subscriptionId, $accessToken, $resource, $changeType, ' +
     '$clientState, $notificationUrl, $subscriptionExpirationDateTime)';
 
-  db.serialize(function executeInsert() {
+  db.serialize(() => {
     db.run(
       insertStatement,
       {
@@ -103,12 +96,10 @@ export function deleteSubscription(subscriptionId, callback) {
     'DELETE FROM Subscription WHERE ' +
     'SubscriptionId = $subscriptionId';
 
-  db.serialize(function executeDelete() {
+  db.serialize(() => {
     db.run(
       deleteStatement,
-      {
-        $subscriptionId: subscriptionId
-      },
+      { $subscriptionId: subscriptionId },
       callback
     );
   });
