@@ -1,8 +1,3 @@
-/*
- * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
 import https from 'https';
 
 const host = 'graph.microsoft.com';
@@ -28,24 +23,18 @@ export function postData(path, token, data, callback) {
 
   const req = https.request(options, res => {
     let subscriptionData = '';
-    res.on('data', chunk => {
-      subscriptionData += chunk;
-    });
+
+    res.on('data', chunk => (subscriptionData += chunk));
     res.on('end', () => {
-      if (res.statusCode === 201) {
-        callback(null, JSON.parse(subscriptionData));
-      } else {
-        callback(JSON.parse(subscriptionData), null);
-      }
+      if (res.statusCode === 201) callback(null, JSON.parse(subscriptionData));
+      else callback(JSON.parse(subscriptionData), null);
     });
   });
 
   req.write(data);
   req.end();
 
-  req.on('error', error => {
-    callback(error, null);
-  });
+  req.on('error', error => callback(error, null));
 }
 
 /**
@@ -69,24 +58,18 @@ export function getData(path, token, callback) {
 
   const req = https.request(options, res => {
     let endpointData = '';
-    res.on('data', chunk => {
-      endpointData += chunk;
-    });
+
+    res.on('data', chunk => (endpointData += chunk));
     res.on('end', () => {
-      if (res.statusCode === 200) {
-        callback(null, JSON.parse(endpointData));
-      } else {
-        callback(JSON.parse(endpointData), null);
-      }
+      if (res.statusCode === 200) callback(null, JSON.parse(endpointData));
+      else callback(JSON.parse(endpointData), null);
     });
   });
 
   req.write('');
   req.end();
 
-  req.on('error', error => {
-    callback(error, null);
-  });
+  req.on('error', error => callback(error, null));
 }
 
 /**
@@ -109,17 +92,11 @@ export function deleteData(path, token, callback) {
 
   const req = https.request(options, res => {
     let endpointData = '';
-    res.on('data', chunk => {
-      endpointData += chunk;
-    });
-    res.on('end', () => {
-      callback(null);
-    });
+    res.on('data', chunk => (endpointData += chunk));
+    res.on('end', () => callback(null));
   });
 
   req.end();
 
-  req.on('error', error => {
-    callback(error);
-  });
+  req.on('error', error => callback(error));
 }

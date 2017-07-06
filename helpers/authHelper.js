@@ -1,9 +1,5 @@
-/*
- * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
 import { AuthenticationContext } from 'adal-node';
+
 import { adalConfiguration } from '../constants';
 
 const resource = 'https://graph.microsoft.com/';
@@ -22,7 +18,6 @@ export function getAuthUrl() {
 /**
  * Gets a token for a given resource.
  * @param {string} code An authorization code returned from a client.
- * @param {string} res A URI that identifies the resource for which the token is valid.
  * @param {AcquireTokenCallback} callback The callback function.
  */
 export function getTokenFromCode(code, callback) {
@@ -34,11 +29,8 @@ export function getTokenFromCode(code, callback) {
     adalConfiguration.clientID,
     adalConfiguration.clientSecret,
     (error, token) => {
-      if (error) {
-        callback(error, null);
-      } else {
-        callback(null, token);
-      }
+      if (error) callback(error, null);
+      else callback(null, token);
     }
   );
 }

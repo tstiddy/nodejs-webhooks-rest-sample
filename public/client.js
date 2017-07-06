@@ -1,8 +1,3 @@
-/*
- * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
 const socket = io.connect('http://localhost:3001'); // eslint-disable-line no-undef
 
 // Socket `notification_received` event handler.
@@ -42,11 +37,10 @@ document.getElementById('signOutButton').onclick = () => {
 function getQueryStringParameter(paramToRetrieve) {
   const params = document.URL.split('?')[1].split('&');
 
-  for (let i = 0; i < params.length; i = i + 1) {
+  for (let i = 0; i < params.length; i++) {
     const singleParam = params[i].split('=');
-    if (singleParam[0] === paramToRetrieve) {
-      return singleParam[1];
-    }
+
+    if (singleParam[0] === paramToRetrieve) return singleParam[1];
   }
   return null;
 }

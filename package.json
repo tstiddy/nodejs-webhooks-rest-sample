@@ -1,6 +1,6 @@
 {
-  "name": "o365-nodejs-webhook",
-  "version": "0.0.1",
+  "name": "microsoft-graph-webhook-nodejs",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "mocha ./tests/confTest.js && nodemon --exec babel-node --presets es2015 ./bin/www",
