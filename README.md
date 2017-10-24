@@ -8,10 +8,20 @@ This Node.js sample shows how to start getting notifications from Microsoft Grap
 * Send back a validation token to confirm the notification URL.
 * Listen for notifications from Microsoft Graph.
 * Request for more information in Microsoft Office 365 using data in the notification.
-  
-![Microsoft Graph Webhook Sample for Node.js screenshot](https://user-images.githubusercontent.com/3375461/27248965-40a3e74c-52c0-11e7-95bf-6963696e3d3a.png)
 
-The previous screenshot shows the app in action. After your app gets a subscription, your app gets a notification when events happen in user data. Your app can then react to the event. This sample writes a list item for every notification received by the notification URL.
+## Screenshots
+
+1. First you need sign in.
+
+![sign in](https://user-images.githubusercontent.com/3375461/31968683-c373ad30-b8c6-11e7-9d01-413fab9fd6d5.png)
+
+2. Once signing in, the app will listen to the incoming emails.
+
+![listening](https://user-images.githubusercontent.com/3375461/31968718-e19696c4-b8c6-11e7-91f2-f1806be0b134.png)
+
+3. After sending the email to the address, you will see the email in the app.
+
+![email](https://user-images.githubusercontent.com/3375461/31968754-0ce4dafc-b8c7-11e7-8458-8152d598228e.png)
 
 ## Prerequisites
 
