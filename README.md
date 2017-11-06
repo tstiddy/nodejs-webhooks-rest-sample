@@ -28,17 +28,48 @@ This Node.js sample shows how to start getting notifications from Microsoft Grap
 To use the Webhook sample, you need the following:
 
 * [Node.js](https://nodejs.org/) version 4 or 5.
-* An app registered in Microsoft Azure. You can use the [App Registration Portal](https://apps.dev.microsoft.com/) with the following parameters:
+* A [work or school account](http://dev.office.com/devprogram).
 
-|     Parameter   |              Value             |
-|----------------:|:-------------------------------|
-|        App type | Web App                        |
-|     Sign on URL | http://localhost:3000          |
-|    Redirect URI | http://localhost:3000/callback |
-| App permissions | Mail.Read                      |
+## Register the app
+
+This app uses the Azure AD endpoint, so you'll register it in the [Azure Portal](https://ms.portal.azure.com/#blade/Microsoft_AAD_IAM/ApplicationsListBlade).
+
+1. Sign in to the portal using your work or school account.
+
+2. Choose **Azure Active Directory** in the left-hand navigation pane.
+
+3. Choose **App registrations**, and then choose **New application registration**.  
+
+   a. Enter a friendly name for the application.
+
+   b. Choose 'Web app/API' as the **Application Type**.
+
+   c. Enter *http://localhost:3000/callback* for the **Sign-on URL**. 
   
-  Copy and store the **Client ID** and **Client Secret** values.
-     
+   d. Click **Create**.
+
+4. Choose your new application from the list of registered applications.
+
+5. Copy and store the Application ID. This value is shown in the **Essentials** pane or in **Settings** > **Properties**.
+
+6. To enable multi-tenanted support for the app, choose **Settings** > **Properties** and set **Multi-tenanted** to **Yes**.
+
+7. Configure permissions for your application:  
+
+   a. Choose **Settings** > **Required permissions** > **Add**.
+  
+   b. Choose **Select an API** > **Microsoft Graph**, and then click **Select**.
+  
+   c. Choose **Select permissions**, scroll down to **Delegated Permissions**, choose **Read user mail**, and then click **Select**.
+  
+   d. Click **Done**.
+
+8. Choose **Settings** > **Keys**. Enter a description, choose a duration for the key, and then click **Save**.
+
+9. **Important**: Copy the key value--this is your app's secret. You won't be able to access this value again after you leave this blade.
+
+You'll use the application ID and secret to configure the app.
+
 ## Configure a tunnel for your localhost
 
 The sample uses *localhost* as the development server. For this reason, we need a tunnel that can forward requests from a URL on the Internet to our *localhost*. If for any reason, you don't want to use a tunnel, see [Hosting without a tunnel](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/wiki/Hosting-the-sample-without-a-tunnel). If you want a detailed explanation about why to use a tunnel, see [Why do I have to use a tunnel?](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/wiki/Why-do-I-have-to-use-a-tunnel)
