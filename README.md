@@ -18,7 +18,7 @@ The previous screenshot shows the app in action. After your app gets a subscript
 To use the Webhook sample, you need the following:
 
 * [Node.js](https://nodejs.org/) version 4 or 5.
-* An app registered in Microsoft Azure. You can use the [Office 365 app registration tool](http://dev.office.com/app-registration). It simplifies app registration. Use the following parameters:
+* An app registered in Microsoft Azure. You can use the [App Registration Portal](https://apps.dev.microsoft.com/) with the following parameters:
 
 |     Parameter   |              Value             |
 |----------------:|:-------------------------------|
