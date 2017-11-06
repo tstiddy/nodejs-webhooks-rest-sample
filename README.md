@@ -36,9 +36,7 @@ This app uses the Azure AD endpoint, so you'll register it in the [Azure Portal]
 
 1. Sign in to the portal using your work or school account.
 
-2. Choose **Azure Active Directory** in the left-hand navigation pane.
-
-3. Choose **App registrations**, and then choose **New application registration**.  
+2. Choose **New application registration**.  
 
    a. Enter a friendly name for the application.
 
@@ -48,13 +46,13 @@ This app uses the Azure AD endpoint, so you'll register it in the [Azure Portal]
   
    d. Click **Create**.
 
-4. Choose your new application from the list of registered applications.
+3. Choose your new application from the list of registered applications.
 
-5. Copy and store the Application ID. This value is shown in the **Essentials** pane or in **Settings** > **Properties**.
+4. Copy and store the Application ID. This value is shown in the **Essentials** pane or in **Settings** > **Properties**.
 
-6. To enable multi-tenanted support for the app, choose **Settings** > **Properties** and set **Multi-tenanted** to **Yes**.
+5. To enable multi-tenanted support for the app, choose **Settings** > **Properties** and set **Multi-tenanted** to **Yes**.
 
-7. Configure permissions for your application:  
+6. Configure permissions for your application:  
 
    a. Choose **Settings** > **Required permissions** > **Add**.
   
@@ -64,9 +62,9 @@ This app uses the Azure AD endpoint, so you'll register it in the [Azure Portal]
   
    d. Click **Done**.
 
-8. Choose **Settings** > **Keys**. Enter a description, choose a duration for the key, and then click **Save**.
+7. Choose **Settings** > **Keys**. Enter a description, choose a duration for the key, and then click **Save**.
 
-9. **Important**: Copy the key value--this is your app's secret. You won't be able to access this value again after you leave this blade.
+8. **Important**: Copy the key value--this is your app's secret. You won't be able to access this value again after you leave this blade.
 
 You'll use the application ID and secret to configure the app.
 
