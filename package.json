@@ -8,12 +8,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "adal-node": "0.1.22",
-    "body-parser": "1.17.2",
+    "adal-node": "^0.1.28",
+    "body-parser": "^1.18.3",
     "express": "4.16.3",
-    "morgan": "1.8.2",
+    "morgan": "^1.9.1",
     "pug": "2.0.0-rc.2",
-    "socket.io": "2.0.3",
+    "socket.io": "^2.1.1",
     "sqlite3": "4.0.2"
   },
   "devDependencies": {
@@ -27,6 +27,6 @@
     "gulp-nodemon": "2.2.1",
     "gulp-plumber": "1.1.0",
     "mocha": "^5.2.0",
-    "nodemon": "1.11.0"
+    "nodemon": "^1.18.4"
   }
 }
