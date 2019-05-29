@@ -3,23 +3,23 @@
 [![Build Status](https://travis-ci.org/microsoftgraph/nodejs-webhooks-rest-sample.svg)](https://travis-ci.org/microsoftgraph/nodejs-webhooks-rest-sample)
 
 ## Table Of Contents. ##
-[Introduction](#introduction)
+* [Introduction](#introduction)
 
-[Screenshots](#screenshots)
+* [Screenshots](#screenshots)
 
-[Prerequisites](#prerequisites)
+* [Prerequisites](#prerequisites)
 
-[Register the app](register)
+* [Register the app](#Register-the-app)
 
-[Configure a tunnel for your localhost](#configure)
+* [Configure a tunnel for your localhost](#Configure-a-tunnel-for-your-localhost)
 
-[Configure and run the web app](#configure-web)
+* [Configure and run the web app](#Configure-and-run-the-web-app)
 
-[Contributing](#contributing)
+* [Contributing](#contributing)
 
-[Questions and Comments](#questions)
+* [Questions and Comments](#Questions-and-Comments)
 
-[Additional resources](#additional)
+* [Additional resources](#Additional-resources)
 
 
 ## Introduction
@@ -57,14 +57,14 @@ To use the Webhook sample, you need the following:
 - A [work or school account](http://dev.office.com/devprogram).
 
 ## Register the app
-<a name="register"></a>
+<a name="Register-the-app"></a>
 
 This app uses the Azure AD endpoint, so you'll register it in the [Azure Portal](https://ms.portal.azure.com/#blade/Microsoft_AAD_IAM/ApplicationsListBlade).
 
 1. Sign in to the Azure portal using either a work or school account or a personal Microsoft account.
 1. If your account gives you access to more than one tenant, select your account in the top right corner, and set your portal session to the desired Azure AD tenant (using Switch Directory).
 1. In the left-hand navigation pane, select the **Azure Active Directory service** , and then select **App registrations.**
-![](registrations.png)
+![](readme-images/registrations.png)
 
 1. Choose **New application registration**.
 
@@ -76,17 +76,18 @@ This app uses the Azure AD endpoint, so you'll register it in the [Azure Portal]
 
 1. Choose your new application from the list of registered applications.
 On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project. 
-![](client.png)
+![](readme-images/client.png)
 1. Configure permissions for your application:
 
     1. Choose **Settings** > **Required permissions** > **Add**.
     1. Choose **Select an API** > **Microsoft Graph**, and then click **Select**.
     1. Choose **Select permissions**, scroll down to **Delegated Permissions**, choose **Mail.Read**, and then click **Select**.
     1. Click **Done**.
-    ![](permissions.png)
+    ![](readme-images/permissions.png)
 
 1. Select **Certificates & secrets** under **Manage**. Select the **New client secret** button. Enter a value in Description and select one of the options for Expires and choose **Add.**
-![](secrets.png)
+
+![](readme-images/secrets.png)
 
 1. **Important**: Copy the key value--this is your app's secret. You won't be able to access this value again after you leave this blade.
 
