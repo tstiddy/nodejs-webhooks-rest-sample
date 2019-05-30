@@ -160,4 +160,4 @@ Office 365 development questions? Post them to [Stack Overflow](http://stackover
 
 ## Copyright
 
-Copyright (c) 2016 Microsoft. All rights reserved.
+Copyright (c) 2019 Microsoft. All rights reserved.
