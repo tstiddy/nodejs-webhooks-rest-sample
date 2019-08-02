@@ -1,3 +1,16 @@
+---
+page_type: sample
+products:
+- ms-graph
+languages:
+- nodejs
+- javascript
+extensions:
+  contentType: samples
+  technologies:
+  - Microsoft Graph
+  createdDate: 3/9/2016 4:12:18 PM
+---
 # Microsoft Graph Webhooks Sample for Node.js
 
 [![Build Status](https://travis-ci.org/microsoftgraph/nodejs-webhooks-rest-sample.svg)](https://travis-ci.org/microsoftgraph/nodejs-webhooks-rest-sample)
