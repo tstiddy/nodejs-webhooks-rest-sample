@@ -5,6 +5,7 @@ products:
 languages:
 - nodejs
 - javascript
+description: "This Node.js sample shows how to start getting notifications from Microsoft Graph."
 extensions:
   contentType: samples
   technologies:
