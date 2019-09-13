@@ -5,7 +5,7 @@ products:
 languages:
 - nodejs
 - javascript
-description: "This Node.js sample shows how to start getting notifications from Microsoft Graph."
+description: "Create Microsoft Graph webhook subscriptions for a Node.js app, so that it can receive notifications of changes in a user’s Microsoft account data."
 extensions:
   contentType: samples
   technologies:
