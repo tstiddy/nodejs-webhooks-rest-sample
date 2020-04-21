@@ -13,6 +13,8 @@ module.exports = {
     "prefer-arrow-callback": 0,
     "new-cap": 0,
     "no-param-reassign": 0,
-    "no-use-before-define": 0
+    "no-use-before-define": 0,
+    "linebreak-style": 0,
+    "no-plusplus": 0
   }
 };

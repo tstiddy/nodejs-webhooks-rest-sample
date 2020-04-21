@@ -31,7 +31,7 @@ document.getElementById('subscriptionId').innerHTML = subscriptionId;
 const userId = getQueryStringParameter('userId');
 document.getElementById('userId').innerHTML = userId;
 document.getElementById('signOutButton').onclick = () => {
-  location.href = '/signout/' + subscriptionId;
+  window.location.href = '/signout/' + subscriptionId;
 };
 
 function getQueryStringParameter(paramToRetrieve) {
