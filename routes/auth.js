@@ -41,8 +41,8 @@ authRouter.get('/callback', (req, res, next) => {
             // The name of the property coming from the service might change from
             // subscriptionId to id in the near future.
             res.redirect(
-              '/home.html?subscriptionId=' + subscriptionData.id +
-              '&userId=' + subscriptionData.userId
+              '/home.html?subscriptionId=' + subscriptionData.id
+              + '&userId=' + subscriptionData.userId
             );
           } else if (requestError) {
             res.status(500);

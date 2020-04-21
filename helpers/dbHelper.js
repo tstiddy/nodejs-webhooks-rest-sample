@@ -10,17 +10,16 @@ const sqlite3 = sql.verbose();
 export function createDatabase() {
   const dbExists = fs.existsSync(dbFile);
   const db = new sqlite3.Database(dbFile);
-  const createSubscriptionStatement =
-    'CREATE TABLE Subscription (' +
-    'UserId TEXT NOT NULL, ' +
-    'SubscriptionId TEXT NOT NULL, ' +
-    'AccessToken TEXT NOT NULL, ' +
-    'Resource TEXT NOT NULL, ' +
-    'ChangeType TEXT NOT NULL, ' +
-    'ClientState TEXT NOT NULL, ' +
-    'NotificationUrl TEXT NOT NULL, ' +
-    'SubscriptionExpirationDateTime TEXT NOT NULL' +
-    ')';
+  const createSubscriptionStatement = 'CREATE TABLE Subscription ('
+    + 'UserId TEXT NOT NULL, '
+    + 'SubscriptionId TEXT NOT NULL, '
+    + 'AccessToken TEXT NOT NULL, '
+    + 'Resource TEXT NOT NULL, '
+    + 'ChangeType TEXT NOT NULL, '
+    + 'ClientState TEXT NOT NULL, '
+    + 'NotificationUrl TEXT NOT NULL, '
+    + 'SubscriptionExpirationDateTime TEXT NOT NULL'
+    + ')';
 
   db.serialize(() => {
     if (!dbExists) {
@@ -38,19 +37,18 @@ export function createDatabase() {
 
 export function getSubscription(subscriptionId, callback) {
   const db = new sqlite3.Database(dbFile);
-  const getUserDataStatement =
-    'SELECT ' +
-    'UserId as userId, ' +
-    'SubscriptionId as subscriptionId, ' +
-    'AccessToken as accessToken, ' +
-    'Resource as resource, ' +
-    'ChangeType as changeType, ' +
-    'ClientState as clientState, ' +
-    'NotificationUrl as notificationUrl, ' +
-    'SubscriptionExpirationDateTime as subscriptionExpirationDateTime ' +
-    'FROM Subscription ' +
-    'WHERE SubscriptionId = $subscriptionId ' +
-    'AND SubscriptionExpirationDateTime > datetime(\'now\')';
+  const getUserDataStatement = 'SELECT '
+    + 'UserId as userId, '
+    + 'SubscriptionId as subscriptionId, '
+    + 'AccessToken as accessToken, '
+    + 'Resource as resource, '
+    + 'ChangeType as changeType, '
+    + 'ClientState as clientState, '
+    + 'NotificationUrl as notificationUrl, '
+    + 'SubscriptionExpirationDateTime as subscriptionExpirationDateTime '
+    + 'FROM Subscription '
+    + 'WHERE SubscriptionId = $subscriptionId '
+    + 'AND SubscriptionExpirationDateTime > datetime(\'now\')';
 
   db.serialize(() => {
     db.get(
@@ -65,12 +63,11 @@ export function getSubscription(subscriptionId, callback) {
 
 export function saveSubscription(subscriptionData, callback) {
   const db = new sqlite3.Database(dbFile);
-  const insertStatement =
-    'INSERT INTO Subscription ' +
-    '(UserId, SubscriptionId, AccessToken, Resource, ChangeType, ' +
-    'ClientState, NotificationUrl, SubscriptionExpirationDateTime) ' +
-    'VALUES ($userId, $subscriptionId, $accessToken, $resource, $changeType, ' +
-    '$clientState, $notificationUrl, $subscriptionExpirationDateTime)';
+  const insertStatement = 'INSERT INTO Subscription '
+    + '(UserId, SubscriptionId, AccessToken, Resource, ChangeType, '
+    + 'ClientState, NotificationUrl, SubscriptionExpirationDateTime) '
+    + 'VALUES ($userId, $subscriptionId, $accessToken, $resource, $changeType, '
+    + '$clientState, $notificationUrl, $subscriptionExpirationDateTime)';
 
   db.serialize(() => {
     db.run(
@@ -92,9 +89,8 @@ export function saveSubscription(subscriptionData, callback) {
 
 export function deleteSubscription(subscriptionId, callback) {
   const db = new sqlite3.Database(dbFile);
-  const deleteStatement =
-    'DELETE FROM Subscription WHERE ' +
-    'SubscriptionId = $subscriptionId';
+  const deleteStatement = 'DELETE FROM Subscription WHERE '
+    + 'SubscriptionId = $subscriptionId';
 
   db.serialize(() => {
     db.run(

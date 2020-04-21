@@ -14,7 +14,7 @@ extensions:
 ---
 # Microsoft Graph Webhooks Sample for Node.js
 
-[![Build Status](https://travis-ci.org/microsoftgraph/nodejs-webhooks-rest-sample.svg)](https://travis-ci.org/microsoftgraph/nodejs-webhooks-rest-sample)
+![Build status](https://github.com/microsoftgraph/nodejs-webhooks-rest-sample/workflows/Node.js%20CI/badge.svg?branch=master)
 
 ## Table Of Contents. ##
 * [Introduction](#introduction)

@@ -24,7 +24,7 @@ export function postData(path, token, data, callback) {
   const req = https.request(options, res => {
     let subscriptionData = '';
 
-    res.on('data', chunk => (subscriptionData += chunk));
+    res.on('data', chunk => { subscriptionData += chunk; });
     res.on('end', () => {
       if (res.statusCode === 201) callback(null, JSON.parse(subscriptionData));
       else callback(JSON.parse(subscriptionData), null);
@@ -50,8 +50,8 @@ export function getData(path, token, callback) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json;odata.metadata=minimal;' +
-              'odata.streaming=true;IEEE754Compatible=false',
+      Accept: 'application/json;odata.metadata=minimal;'
+              + 'odata.streaming=true;IEEE754Compatible=false',
       Authorization: 'Bearer ' + token
     }
   };
@@ -59,7 +59,7 @@ export function getData(path, token, callback) {
   const req = https.request(options, res => {
     let endpointData = '';
 
-    res.on('data', chunk => (endpointData += chunk));
+    res.on('data', chunk => { endpointData += chunk; });
     res.on('end', () => {
       if (res.statusCode === 200) callback(null, JSON.parse(endpointData));
       else callback(JSON.parse(endpointData), null);
@@ -91,8 +91,6 @@ export function deleteData(path, token, callback) {
   };
 
   const req = https.request(options, res => {
-    let endpointData = '';
-    res.on('data', chunk => (endpointData += chunk));
     res.on('end', () => callback(null));
   });
 

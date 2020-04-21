@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "mocha ./tests/confTest.js && nodemon --exec babel-node --presets env ./bin/www",
-    "debug": "mocha ./tests/confTest.js && nodemon --exec babel-node --presets env --debug-brk ./bin/www",
+    "build": "babel index.js helpers routes app.js constants.js -d .tmp --config-file ./babel.config.json",
+    "start": "mocha ./tests/confTest.js && babel-node --config-file ./babel.config.json ./index",
+    "debug": "mocha ./tests/confTest.js && babel-node --config-file ./babel.config.json --debug-brk ./index",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -17,15 +18,13 @@
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
     "babel-eslint": "^10.1.0",
-    "babel-preset-env": "^1.7.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
-    "gulp": "^4.0.2",
-    "gulp-nodemon": "^2.5.0",
-    "gulp-plumber": "^1.2.1",
-    "mocha": "^7.1.1",
-    "nodemon": "^2.0.3"
+    "mocha": "^7.1.1"
   }
 }
