@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { app } from '../app';
-import { createDatabase } from '../helpers/dbHelper';
+import { app } from './app';
+import { createDatabase } from './helpers/dbHelper';
 
 createDatabase();
 
