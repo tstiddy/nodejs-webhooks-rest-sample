@@ -1,5 +1,5 @@
 ---
-page_type: sample 
+page_type: sample
 products:
 - ms-graph
 languages:
@@ -67,7 +67,7 @@ This Node.js sample shows how to start getting notifications from Microsoft Grap
 
 To use the Webhook sample, you need the following:
 
-- [Node.js](https://nodejs.org/) version 4 or 5.
+- [Node.js](https://nodejs.org/) version 10 or 12.
 - A [work or school account](http://dev.office.com/devprogram).
 
 ## Register the app
@@ -89,7 +89,7 @@ This app uses the Azure AD endpoint, so you'll register it in the [Azure Portal]
     1. Click **Create**.
 
 1. Choose your new application from the list of registered applications.
-On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project. 
+On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
 ![](readme-images/client.png)
 1. Configure permissions for your application:
 
