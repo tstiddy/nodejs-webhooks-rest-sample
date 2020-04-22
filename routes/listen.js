@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 
 import { ioServer } from '../helpers/socketHelper';
-import { getData } from '../helpers/requestHelper';
+import { SubscriptionManagementService } from '../helpers/requestHelper';
 import { getSubscription } from '../helpers/dbHelper';
 import { subscriptionConfiguration } from '../constants';
 
@@ -62,20 +62,16 @@ listenRouter.post('/', (req, res, next) => {
 // Retrieve the actual mail message data from Office 365.
 // Send the message data to the socket.
 function processNotification(subscriptionId, resource, res, next) {
-  getSubscription(subscriptionId, (dbError, subscriptionData) => {
+  getSubscription(subscriptionId, async (dbError, subscriptionData) => {
     if (subscriptionData) {
-      getData(
-        `/beta/${resource}`,
-        subscriptionData.accessToken,
-        (requestError, endpointData) => {
-          if (endpointData) {
-            ioServer.to(subscriptionId).emit('notification_received', endpointData);
-          } else if (requestError) {
-            res.status(500);
-            next(requestError);
-          }
-        }
-      );
+      try {
+        const subscriptionManagementService = new SubscriptionManagementService(subscriptionData.accessToken);
+        const endpointData = await subscriptionManagementService.getData(resource);
+        ioServer.to(subscriptionId).emit('notification_received', endpointData);
+      } catch (requestError) {
+        res.status(500);
+        next(requestError);
+      }
     } else if (dbError) {
       res.status(500);
       next(dbError);

@@ -15,6 +15,7 @@ module.exports = {
     "no-param-reassign": 0,
     "no-use-before-define": 0,
     "linebreak-style": 0,
-    "no-plusplus": 0
+    "no-plusplus": 0,
+    "max-len": 0
   }
 };
