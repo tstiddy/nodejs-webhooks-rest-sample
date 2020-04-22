@@ -2,7 +2,7 @@ import express from 'express';
 
 import { getSubscription, saveSubscription, deleteSubscription } from '../helpers/dbHelper';
 import { getAuthUrl, getTokenFromCode } from '../helpers/authHelper';
-import { postData, deleteData } from '../helpers/requestHelper';
+import { SubscriptionManagementService } from '../helpers/requestHelper';
 import { subscriptionConfiguration } from '../constants';
 
 export const authRouter = express.Router();
@@ -21,35 +21,29 @@ authRouter.get('/signin', (req, res) => {
 // It requests the subscription from Office 365, stores the subscription in a database,
 // and redirects the browser to the home page.
 authRouter.get('/callback', (req, res, next) => {
-  getTokenFromCode(req.query.code, (authenticationError, token) => {
+  getTokenFromCode(req.query.code, async (authenticationError, token) => {
     if (token) {
       // Request this subscription to expire one day from now.
       // Note: 1 day = 86400000 milliseconds
       subscriptionConfiguration.expirationDateTime = new Date(Date.now() + 86400000).toISOString();
 
-      // Make the request to subscription service.
-      postData(
-        '/beta/subscriptions',
-        token.accessToken,
-        JSON.stringify(subscriptionConfiguration),
-        (requestError, subscriptionData) => {
-          if (subscriptionData) {
-            subscriptionData.userId = token.userId;
-            subscriptionData.accessToken = token.accessToken;
-            saveSubscription(subscriptionData, null);
+      try {
+        const subscriptionService = new SubscriptionManagementService(token.accessToken);
+        const subscriptionData = await subscriptionService.createSubscription(subscriptionConfiguration);
 
-            // The name of the property coming from the service might change from
-            // subscriptionId to id in the near future.
-            res.redirect(
-              '/home.html?subscriptionId=' + subscriptionData.id
-              + '&userId=' + subscriptionData.userId
-            );
-          } else if (requestError) {
-            res.status(500);
-            next(requestError);
-          }
-        }
-      );
+        subscriptionData.userId = token.userId;
+        subscriptionData.accessToken = token.accessToken;
+        saveSubscription(subscriptionData, null);
+        // The name of the property coming from the service might change from
+        // subscriptionId to id in the near future.
+        res.redirect(
+          '/home.html?subscriptionId=' + subscriptionData.id
+          + '&userId=' + subscriptionData.userId
+        );
+      } catch (requestError) {
+        res.status(500);
+        next(requestError);
+      }
     } else if (authenticationError) {
       res.status(500);
       next(authenticationError);
@@ -64,20 +58,16 @@ authRouter.get('/signout/:subscriptionId', (req, res) => {
   const redirectUri = `${req.protocol}://${req.hostname}:${req.app.settings.port}`;
 
   // Delete the subscription from Microsoft Graph
-  getSubscription(req.params.subscriptionId, (dbError, subscriptionData, next) => {
-    if (subscriptionData) {
-      deleteData(
-        `/beta/subscriptions/${req.params.subscriptionId}`,
-        subscriptionData.accessToken,
-        error => {
-          if (!error) deleteSubscription(req.params.subscriptionId, null);
-        }
-      );
-    } else if (dbError) {
+  getSubscription(req.params.subscriptionId, async (dbError, subscriptionData, next) => {
+    try {
+      const subscriptionService = new SubscriptionManagementService(subscriptionData.accessToken);
+      await subscriptionService.deleteSubscription(req.params.subscriptionId);
+
+      deleteSubscription(req.params.subscriptionId, null);
+      res.redirect('https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=' + redirectUri);
+    } catch (requestError) {
       res.status(500);
-      next(dbError);
+      next(requestError);
     }
   });
-
-  res.redirect('https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=' + redirectUri);
 });
