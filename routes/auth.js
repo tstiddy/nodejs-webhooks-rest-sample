@@ -59,7 +59,6 @@ authRouter.get('/signout/:subscriptionId', (req, res) => {
 
   // Delete the subscription from Microsoft Graph
   getSubscription(req.params.subscriptionId, async (dbError, subscriptionData, next) => {
-
     try {
       const subscriptionService = new SubscriptionManagementService(subscriptionData.accessToken);
       await subscriptionService.deleteSubscription(req.params.subscriptionId);
