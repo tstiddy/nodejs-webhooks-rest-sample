@@ -23,7 +23,7 @@ export class SubscriptionManagementService {
 
   async createSubscription(subscriptionCreationInformation) {
     const client = this.getGraphClient();
-    const subscription = await client.api(this.subscriptionPath).create(subscriptionCreationInformation);
+    const subscription = await client.api(this.subscriptionPath).version('beta').create(subscriptionCreationInformation);
     return subscription;
   }
 
