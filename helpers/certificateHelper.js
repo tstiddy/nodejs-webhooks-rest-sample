@@ -22,17 +22,7 @@ export function createSelfSignedCertificate(certPath, keyPath, password) {
 }
 
 export function getSerializedCertificate(certPath) {
-  ensureOpenSsl();
-  return new Promise((resolve) => {
-    const pfx = fs.readFileSync(path.join(__dirname, certPath));
-    const pfxAsString = pfx.toString();
-    pem.getPublicKey(pfxAsString, (err, keyInfo) => {
-      if (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
-      }
-      const encoded = Buffer.from(keyInfo.publicKey).toString('base64');
-      resolve(encoded);
-    });
-  });
+  const pfx = fs.readFileSync(path.join(__dirname, certPath));
+  const pfxAsString = pfx.toString().replace(/(\r\n|\n|\r|-|BEGIN|END|CERTIFICATE|\s)/gm, '');
+  return pfxAsString;
 }
