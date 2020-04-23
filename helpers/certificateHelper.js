@@ -48,3 +48,9 @@ export function decryptPayload(base64encodedPayload, decryptedSymetricKey) {
   decryptedPayload += decipher.final('utf8');
   return decryptedPayload;
 }
+
+export function verifySignature(base64encodedSignature, base64encodedPayload, decryptedSymetricKey) {
+  const hmac = crypto.createHmac('sha256', decryptedSymetricKey);
+  hmac.write(base64encodedPayload, 'base64');
+  return base64encodedSignature === hmac.digest('base64');
+}
