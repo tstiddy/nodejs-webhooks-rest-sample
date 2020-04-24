@@ -3,7 +3,8 @@ import express from 'express';
 import { getSubscription, saveSubscription, deleteSubscription } from '../helpers/dbHelper';
 import { getAuthUrl, getTokenFromCode } from '../helpers/authHelper';
 import { SubscriptionManagementService } from '../helpers/requestHelper';
-import { subscriptionConfiguration } from '../constants';
+import { subscriptionConfiguration, certificateConfiguration } from '../constants';
+import { getSerializedCertificate, createSelfSignedCertificateIfNotExists } from '../helpers/certificateHelper';
 
 export const authRouter = express.Router();
 
@@ -23,12 +24,18 @@ authRouter.get('/signin', (req, res) => {
 authRouter.get('/callback', (req, res, next) => {
   getTokenFromCode(req.query.code, async (authenticationError, token) => {
     if (token) {
-      // Request this subscription to expire one day from now.
-      // Note: 1 day = 86400000 milliseconds
-      subscriptionConfiguration.expirationDateTime = new Date(Date.now() + 86400000).toISOString();
+      // Request this subscription to expire one hour from now.
+      // Note: 1 hour = 3600000 milliseconds
+      subscriptionConfiguration.expirationDateTime = new Date(Date.now() + 3600000).toISOString();
 
       try {
         const subscriptionService = new SubscriptionManagementService(token.accessToken);
+        if (subscriptionConfiguration.includeResourceData) {
+          // we're registering a subscription for notifications with resource data and must attach certificate information to get the data
+          await createSelfSignedCertificateIfNotExists(certificateConfiguration.relativeCertPath, certificateConfiguration.relativeKeyPath, certificateConfiguration.password);
+          subscriptionConfiguration.encryptionCertificate = getSerializedCertificate(certificateConfiguration.relativeCertPath);
+          subscriptionConfiguration.encryptionCertificateId = certificateConfiguration.certificateId;
+        }
         const subscriptionData = await subscriptionService.createSubscription(subscriptionConfiguration);
 
         subscriptionData.userId = token.userId;
