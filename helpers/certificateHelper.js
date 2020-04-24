@@ -10,14 +10,22 @@ function ensureOpenSsl() {
   }
 }
 
-export function createSelfSignedCertificate(certPath, keyPath, password) {
-  ensureOpenSsl();
-  pem.createCertificate({ selfSigned: true, serviceKeyPassword: password, days: 365 }, (err, result) => {
-    fs.writeFileSync(path.join(__dirname, certPath), result.certificate);
-    fs.writeFileSync(path.join(__dirname, keyPath), result.serviceKey);
-    if (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
+export function createSelfSignedCertificateIfNotExists(certPath, keyPath, password) {
+  const certFullPath = path.join(__dirname, certPath);
+  return new Promise((resolve) => {
+    if (!fs.existsSync(certFullPath)) {
+      ensureOpenSsl();
+      pem.createCertificate({ selfSigned: true, serviceKeyPassword: password, days: 365 }, (err, result) => {
+        fs.writeFileSync(certFullPath, result.certificate);
+        fs.writeFileSync(path.join(__dirname, keyPath), result.serviceKey);
+        if (err) {
+          // eslint-disable-next-line no-console
+          console.error(err);
+        }
+        resolve();
+      });
+    } else {
+      resolve();
     }
   });
 }

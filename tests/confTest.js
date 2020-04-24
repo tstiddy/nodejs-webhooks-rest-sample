@@ -3,11 +3,11 @@ var conf = require('../constants');
 
 describe('ADAL', function () { // eslint-disable-line no-undef
   it( // eslint-disable-line no-undef
-    'Checking clientID and clientSecret in constants.js',
+    'Checking clientID, clientSecret and tenantID in constants.js',
     function () {
       assert(
         isADALConfigured(conf.adalConfiguration),
-        '\nRegister clientID and clientSecret in file constants.js.\n'
+        '\nRegister clientID. clientSecret, tenantID in file constants.js.\n'
         + 'You don\'t have them? Get them by using the Office 365 app registration tool\n'
         + 'http://dev.office.com/app-registration\n'
         + 'App type: Web App\n'
@@ -37,12 +37,16 @@ function isADALConfigured(configuration) {
     && configuration.clientID !== null
     && configuration.clientID !== ''
     && configuration.clientID !== 'ENTER_YOUR_CLIENT_ID';
+  var tenantIDConfigured = typeof (configuration.tenantID) !== 'undefined'
+    && configuration.tenantID !== null
+    && configuration.tenantID !== ''
+    && configuration.tenantID !== 'ENTER_YOUR_TENANT_ID';
   var clientSecretConfigured = typeof (configuration.clientSecret) !== 'undefined'
     && configuration.clientSecret !== null
     && configuration.clientSecret !== ''
     && configuration.clientSecret !== 'ENTER_YOUR_SECRET';
 
-  return clientIDConfigured && clientSecretConfigured;
+  return clientIDConfigured && clientSecretConfigured && tenantIDConfigured;
 }
 
 function isSubscriptionConfigured(configuration) {
