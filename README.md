@@ -69,6 +69,9 @@ To use the Webhook sample, you need the following:
 
 - [Node.js](https://nodejs.org/) version 10 or 12.
 - A [work or school account](http://dev.office.com/devprogram).
+- [OpenSSL](https://www.openssl.org/source/) when trying change notifications with resource data.
+
+> You can install OpenSSL on windows using [chocolatey](https://chocolatey.org/install) with `choco install openssl -y` (run as administrator).
 
 ## Register the app
 <a name="Register-the-app"></a>
