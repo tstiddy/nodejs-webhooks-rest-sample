@@ -1,22 +1,25 @@
 const socket = io.connect('http://localhost:3001'); // eslint-disable-line no-undef
 
 // Socket `notification_received` event handler.
-socket.on('notification_received', mailData => {
+socket.on('notification_received', notificationData => {
   const listItem = document.createElement('div');
-  listItem.className = 'ms-ListItem is-selectable';
-  listItem.onclick = () => {
-    window.open(mailData.webLink, 'outlook');
-  };
-
-  const primaryText = document.createElement('span');
-  primaryText.className = 'ms-ListItem-primaryText';
-  primaryText.innerText = mailData.sender.emailAddress.name;
+  if (notificationData.webLink || notificationData.webUrl) {
+    const link = document.createElement('a');
+    link.innerText = 'Open in application';
+    link.href = notificationData.webLink ? notificationData.webLink : notificationData.webUrl;
+    link.target = '_blank';
+    listItem.appendChild(link);
+    listItem.appendChild(document.createElement('br'));
+  }
+  if (notificationData.sender) {
+    const primaryText = document.createElement('span');
+    primaryText.innerText = notificationData.sender.emailAddress.name;
+    listItem.appendChild(primaryText);
+    listItem.appendChild(document.createElement('br'));
+  }
 
   const secondaryText = document.createElement('span');
-  secondaryText.className = 'ms-ListItem-secondaryText';
-  secondaryText.innerText = mailData.subject;
-
-  listItem.appendChild(primaryText);
+  secondaryText.innerText = notificationData.subject ? notificationData.subject : JSON.stringify(notificationData);
   listItem.appendChild(secondaryText);
 
   document.getElementById('notifications').appendChild(listItem);

@@ -60,7 +60,7 @@ listenRouter.post('/', async (req, res, next) => {
           if (isSignatureValid) {
             // the signature is valid, data hasn't been tampered with. We can proceed to displaying the data
             const decryptedPayload = decryptPayload(req.body.value[i].encryptedContent.data, decryptedSymetricKey);
-            emitNotification(subscriptionId, decryptedPayload);
+            emitNotification(subscriptionId, JSON.parse(decryptedPayload));
           } // otherwise data is invalid, ignore it
         } else {
           // we have a plain notification that doesn't contain data, let's call Microsoft Graph to get the resource data
