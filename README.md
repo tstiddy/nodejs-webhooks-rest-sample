@@ -132,6 +132,7 @@ You'll need the `NGROK_ID` value in the next section.
 
 1. Use a text editor to open `constants.js`.
 1. Replace `ENTER_YOUR_CLIENT_ID` with the client ID of your registered Azure application.
+1. Replace `ENTER_YOUR_TENANT_ID` with the ID of your organization. This information can be found next to the client ID on the application management page.
 1. Replace `ENTER_YOUR_SECRET` with the client secret of your registered Azure application.
 1. Replace `NGROK_ID` with the value in *https public URL* from the previous section.
 ![](const)
