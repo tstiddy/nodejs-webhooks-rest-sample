@@ -20,17 +20,35 @@ export function getAuthUrl() {
  * @param {string} code An authorization code returned from a client.
  * @param {AcquireTokenCallback} callback The callback function.
  */
-export function getTokenFromCode(code, callback) {
+export function getTokenFromCode(code) {
   const authContext = new AuthenticationContext(adalConfiguration.authority);
-  authContext.acquireTokenWithAuthorizationCode(
-    code,
-    adalConfiguration.redirectUri,
-    resource,
-    adalConfiguration.clientID,
-    adalConfiguration.clientSecret,
-    (error, token) => {
-      if (error) callback(error, null);
-      else callback(null, token);
-    }
-  );
+  return new Promise((resolve, reject) => {
+    authContext.acquireTokenWithAuthorizationCode(
+      code,
+      adalConfiguration.redirectUri,
+      resource,
+      adalConfiguration.clientID,
+      adalConfiguration.clientSecret,
+      (err, token) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(token);
+        }
+      }
+    );
+  });
+}
+
+export function getAppOnlyToken() {
+  const authContext = new AuthenticationContext(adalConfiguration.authority.replace('common', adalConfiguration.tenantID));
+  return new Promise((resolve, reject) => {
+    authContext.acquireTokenWithClientCredentials(resource, adalConfiguration.clientID, adalConfiguration.clientSecret, (err, token) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(token);
+      }
+    });
+  });
 }

@@ -30,9 +30,6 @@ const subscriptionId = getQueryStringParameter('subscriptionId');
 socket.emit('create_room', subscriptionId);
 document.getElementById('subscriptionId').innerHTML = subscriptionId;
 
-// The page also needs to send the userId to properly sign out the user.
-const userId = getQueryStringParameter('userId');
-document.getElementById('userId').innerHTML = userId;
 document.getElementById('signOutButton').onclick = () => {
   window.location.href = '/signout/' + subscriptionId;
 };
