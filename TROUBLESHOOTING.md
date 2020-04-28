@@ -39,7 +39,7 @@ There are some alternatives that you can consider to try this sample without a t
 
 You can host the sample using a cloud service such as Microsoft Azure. Cloud services allow you to expose the notification URL to the Internet. Microsoft Graph can deliver notifications to the URL in the cloud.
 
-Note that in some cases, you'll be able to deploy the sample to a website hosted in the cloud. In other cases, you'll need to set up a virtual machine and install a development environment with the prerequisites listed in the [ReadMe](../blob/master/README.md#prerequisites).
+Note that in some cases, you'll be able to deploy the sample to a website hosted in the cloud. In other cases, you'll need to set up a virtual machine and install a development environment with the prerequisites listed in the [ReadMe](./README.md#prerequisites).
 
 See your cloud provider's documentation for details about how to host a web application or virtual machine using the cloud service.
 
