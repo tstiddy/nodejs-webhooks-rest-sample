@@ -43,19 +43,7 @@ The following are common tasks that an application performs with webhooks subscr
 - Request more information about changed resources using data in the notification if no data is provided with the notification.
 - Decrypts the resource data provided with the notification if any has been provided with the notification.
 
-## Screenshots
-
-1. First you need sign in.
-
-    ![sign in](https://user-images.githubusercontent.com/3375461/31968683-c373ad30-b8c6-11e7-9d01-413fab9fd6d5.png)
-
-1. Once signing in, the app will listen to the incoming emails.
-
-    ![listening](https://user-images.githubusercontent.com/3375461/31968718-e19696c4-b8c6-11e7-91f2-f1806be0b134.png)
-
-1. After sending the email to the address, you will see the email in the app.
-
-    ![email](https://user-images.githubusercontent.com/3375461/31968754-0ce4dafc-b8c7-11e7-8458-8152d598228e.png)
+## Using the Microsoft Graph Webhooks Sample
 
 ### Prerequisites
 
@@ -143,7 +131,7 @@ You'll need the `NGROK_ID` value in the next section.
 
 >See [troubleshooting](./TROUBLESHOOTING.md) for more information about using tunnels.
 
-## Configure and run the sample
+### Configure and run the sample
 
 1. Use a text editor to open `constants.js`.
 1. Replace `ENTER_YOUR_CLIENT_ID` with the client ID of your registered Azure application.
