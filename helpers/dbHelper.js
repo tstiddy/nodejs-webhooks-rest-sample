@@ -11,7 +11,6 @@ export function createDatabase() {
   const dbExists = fs.existsSync(dbFile);
   const db = new sqlite3.Database(dbFile);
   const createSubscriptionStatement = 'CREATE TABLE Subscription ('
-    + 'UserId TEXT NOT NULL, '
     + 'SubscriptionId TEXT NOT NULL, '
     + 'AccessToken TEXT NOT NULL, '
     + 'Resource TEXT NOT NULL, '
@@ -38,7 +37,6 @@ export function createDatabase() {
 export function getSubscription(subscriptionId, callback) {
   const db = new sqlite3.Database(dbFile);
   const getUserDataStatement = 'SELECT '
-    + 'UserId as userId, '
     + 'SubscriptionId as subscriptionId, '
     + 'AccessToken as accessToken, '
     + 'Resource as resource, '
@@ -64,16 +62,15 @@ export function getSubscription(subscriptionId, callback) {
 export function saveSubscription(subscriptionData, callback) {
   const db = new sqlite3.Database(dbFile);
   const insertStatement = 'INSERT INTO Subscription '
-    + '(UserId, SubscriptionId, AccessToken, Resource, ChangeType, '
+    + '(SubscriptionId, AccessToken, Resource, ChangeType, '
     + 'ClientState, NotificationUrl, SubscriptionExpirationDateTime) '
-    + 'VALUES ($userId, $subscriptionId, $accessToken, $resource, $changeType, '
+    + 'VALUES ($subscriptionId, $accessToken, $resource, $changeType, '
     + '$clientState, $notificationUrl, $subscriptionExpirationDateTime)';
 
   db.serialize(() => {
     db.run(
       insertStatement,
       {
-        $userId: subscriptionData.userId,
         $subscriptionId: subscriptionData.id,
         $accessToken: subscriptionData.accessToken,
         $resource: subscriptionData.resource,
