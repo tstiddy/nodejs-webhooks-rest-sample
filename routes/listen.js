@@ -1,5 +1,6 @@
 import express from 'express';
 import http from 'http';
+import escape from 'escape-html';
 
 import { ioServer } from '../helpers/socketHelper';
 import { SubscriptionManagementService } from '../helpers/requestHelper';
@@ -20,7 +21,7 @@ listenRouter.post('/', async (req, res, next) => {
   // that this is a valid endpoint.
   // Just send the validationToken back.
   if (req.query && req.query.validationToken) {
-    res.send(req.query.validationToken);
+    res.send(escape(req.query.validationToken));
     // Send a status of 'Ok'
     status = 200;
   } else {
