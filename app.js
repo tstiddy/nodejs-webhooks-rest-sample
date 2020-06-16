@@ -2,11 +2,17 @@ import express from 'express';
 import path from 'path';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
+import RateLimit from 'express-rate-limit';
 
 import { authRouter } from './routes/auth';
 import { listenRouter } from './routes/listen';
 
 export const app = express();
+
+const limiter = new RateLimit({
+  windowMs: 2 * 60 * 1000, // 2 minutes
+  max: 2400, // 20 rps, these values should be adjusted for production use depending on your infrastructure and the volume of notifications you expect
+});
 
 const env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
@@ -24,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', authRouter);
 app.use('/listen', listenRouter);
+app.use(limiter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
