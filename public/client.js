@@ -28,7 +28,7 @@ socket.on('notification_received', notificationData => {
 // When the page first loads, create the socket room.
 const subscriptionId = getQueryStringParameter('subscriptionId');
 socket.emit('create_room', subscriptionId);
-document.getElementById('subscriptionId').innerHTML = subscriptionId;
+document.getElementById('subscriptionId').innerText = subscriptionId;
 
 document.getElementById('signOutButton').onclick = () => {
   window.location.href = '/signout/' + subscriptionId;
