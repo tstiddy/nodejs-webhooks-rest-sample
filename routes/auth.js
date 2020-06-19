@@ -53,7 +53,6 @@ authRouter.get('/callback', async (req, res, next) => {
   }
 });
 
-
 // This route gets called when using the app-only flow
 authRouter.get('/callbackapponly', async (req, res, next) => {
   try {
