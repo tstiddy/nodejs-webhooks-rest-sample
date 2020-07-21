@@ -1,4 +1,4 @@
-import * as msal from '@azure/msal-node';
+import { ConfidentialClientApplication } from '@azure/msal-node';
 
 import { msalConfiguration } from '../constants';
 
@@ -21,7 +21,7 @@ export function getAuthUrl() {
  * @param {AcquireTokenCallback} callback The callback function.
  */
 export function getTokenFromCode(code) {
-  const authContext = new msal.AuthenticationContext(msalConfiguration.authority);
+  const authContext = new ConfidentialClientApplication(msalConfiguration.authority);
   return new Promise((resolve, reject) => {
     authContext.acquireTokenWithAuthorizationCode(
       code,
