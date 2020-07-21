@@ -1,4 +1,4 @@
-exports.adalConfiguration = {
+exports.msalConfiguration = {
   authority: 'https://login.microsoftonline.com/common',
   clientID: 'ENTER_YOUR_CLIENT_ID',
   clientSecret: 'ENTER_YOUR_SECRET',

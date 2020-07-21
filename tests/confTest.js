@@ -1,12 +1,12 @@
 var assert = require('assert');
 var conf = require('../constants');
 
-describe('ADAL', function () { // eslint-disable-line no-undef
+describe('MSAL', function () { // eslint-disable-line no-undef
   it( // eslint-disable-line no-undef
     'Checking clientID, clientSecret and tenantID in constants.js',
     function () {
       assert(
-        isADALConfigured(conf.adalConfiguration),
+        isMSALConfigured(conf.msalConfiguration),
         '\nRegister clientID. clientSecret, tenantID in file constants.js.\n'
         + 'You don\'t have them? Get them by using the Office 365 app registration tool\n'
         + 'http://dev.office.com/app-registration\n'
@@ -32,7 +32,7 @@ describe('NotificationURL', function () { // eslint-disable-line no-undef
   });
 });
 
-function isADALConfigured(configuration) {
+function isMSALConfigured(configuration) {
   var clientIDConfigured = typeof (configuration.clientID) !== 'undefined'
     && configuration.clientID !== null
     && configuration.clientID !== ''

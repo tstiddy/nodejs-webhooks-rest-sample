@@ -1,6 +1,6 @@
-import { AuthenticationContext } from 'adal-node';
+import * as msal from '@azure/msal-node';
 
-import { adalConfiguration } from '../constants';
+import { msalConfiguration } from '../constants';
 
 const resource = 'https://graph.microsoft.com/';
 
@@ -9,10 +9,10 @@ const resource = 'https://graph.microsoft.com/';
  * @return {string} a fully formed uri with which authentication can be completed.
  */
 export function getAuthUrl() {
-  return adalConfiguration.authority + '/oauth2/authorize'
-    + '?client_id=' + adalConfiguration.clientID
+  return msalConfiguration.authority + '/oauth2/authorize'
+    + '?client_id=' + msalConfiguration.clientID
     + '&response_type=code'
-    + '&redirect_uri=' + adalConfiguration.redirectUri;
+    + '&redirect_uri=' + msalConfiguration.redirectUri;
 }
 
 /**
@@ -21,14 +21,14 @@ export function getAuthUrl() {
  * @param {AcquireTokenCallback} callback The callback function.
  */
 export function getTokenFromCode(code) {
-  const authContext = new AuthenticationContext(adalConfiguration.authority);
+  const authContext = new msal.AuthenticationContext(msalConfiguration.authority);
   return new Promise((resolve, reject) => {
     authContext.acquireTokenWithAuthorizationCode(
       code,
-      adalConfiguration.redirectUri,
+      msalConfiguration.redirectUri,
       resource,
-      adalConfiguration.clientID,
-      adalConfiguration.clientSecret,
+      msalConfiguration.clientID,
+      msalConfiguration.clientSecret,
       (err, token) => {
         if (err) {
           reject(err);
@@ -41,9 +41,9 @@ export function getTokenFromCode(code) {
 }
 
 export function getAppOnlyToken() {
-  const authContext = new AuthenticationContext(adalConfiguration.authority.replace('common', adalConfiguration.tenantID));
+  const authContext = new AuthenticationContext(msalConfiguration.authority.replace('common', msalConfiguration.tenantID));
   return new Promise((resolve, reject) => {
-    authContext.acquireTokenWithClientCredentials(resource, adalConfiguration.clientID, adalConfiguration.clientSecret, (err, token) => {
+    authContext.acquireTokenWithClientCredentials(resource, msalConfiguration.clientID, msalConfiguration.clientSecret, (err, token) => {
       if (err) {
         reject(err);
       } else {
