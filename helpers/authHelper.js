@@ -21,7 +21,7 @@ export function getAuthUrl() {
  * @param {AcquireTokenCallback} callback The callback function.
  */
 export function getTokenFromCode(code) {
-  const authContext = new ConfidentialClientApplication(msalConfiguration.authority);
+  const authContext = new ConfidentialClientApplication(msalConfiguration.authority); // TODO replace by onbehalf when available
   return new Promise((resolve, reject) => {
     authContext.acquireTokenWithAuthorizationCode(
       code,
@@ -41,8 +41,8 @@ export function getTokenFromCode(code) {
 }
 
 export function getAppOnlyToken() {
-  const authContext = new AuthenticationContext(msalConfiguration.authority.replace('common', msalConfiguration.tenantID));
-  return new Promise((resolve, reject) => {
+  const authContext = new ConfidentialClientApplication(msalConfiguration.authority.replace('common', msalConfiguration.tenantID));
+  return new Promise((resolve, reject) => { // TODO replace by client credential flow when available
     authContext.acquireTokenWithClientCredentials(resource, msalConfiguration.clientID, msalConfiguration.clientSecret, (err, token) => {
       if (err) {
         reject(err);
