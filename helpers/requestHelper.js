@@ -1,4 +1,4 @@
-import 'isomorphic-fetch';
+import 'cross-fetch/polyfill';
 import * as MicrosoftGraph from '@microsoft/microsoft-graph-client';
 
 export class SubscriptionManagementService {
