@@ -1,18 +1,24 @@
-import { AuthenticationContext } from 'adal-node';
+import { ConfidentialClientApplication } from '@azure/msal-node';
 
-import { adalConfiguration } from '../constants';
+import { msalConfiguration } from '../constants';
 
-const resource = 'https://graph.microsoft.com/';
+const resource = 'https://graph.microsoft.com/.default';
 
 /**
  * Generate a fully formed uri to use for authentication based on the supplied resource argument
  * @return {string} a fully formed uri with which authentication can be completed.
  */
 export function getAuthUrl() {
-  return adalConfiguration.authority + '/oauth2/authorize'
-    + '?client_id=' + adalConfiguration.clientID
-    + '&response_type=code'
-    + '&redirect_uri=' + adalConfiguration.redirectUri;
+  const authContext = new ConfidentialClientApplication({
+    auth: {
+      clientId: msalConfiguration.clientID,
+      authority: msalConfiguration.authority.replace('common', msalConfiguration.tenantID),
+      clientSecret: msalConfiguration.clientSecret
+    }
+  });
+  return authContext.getAuthCodeUrl({
+    redirectUri: msalConfiguration.redirectUri
+  });
 }
 
 /**
@@ -21,34 +27,29 @@ export function getAuthUrl() {
  * @param {AcquireTokenCallback} callback The callback function.
  */
 export function getTokenFromCode(code) {
-  const authContext = new AuthenticationContext(adalConfiguration.authority);
-  return new Promise((resolve, reject) => {
-    authContext.acquireTokenWithAuthorizationCode(
-      code,
-      adalConfiguration.redirectUri,
-      resource,
-      adalConfiguration.clientID,
-      adalConfiguration.clientSecret,
-      (err, token) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(token);
-        }
-      }
-    );
+  const authContext = new ConfidentialClientApplication({
+    auth: {
+      clientId: msalConfiguration.clientID,
+      authority: msalConfiguration.authority.replace('common', msalConfiguration.tenantID),
+      clientSecret: msalConfiguration.clientSecret
+    }
+  });
+  return authContext.acquireTokenByCode({
+    code: code,
+    redirectUri: msalConfiguration.redirectUri,
+    scopes: [resource]
   });
 }
 
 export function getAppOnlyToken() {
-  const authContext = new AuthenticationContext(adalConfiguration.authority.replace('common', adalConfiguration.tenantID));
-  return new Promise((resolve, reject) => {
-    authContext.acquireTokenWithClientCredentials(resource, adalConfiguration.clientID, adalConfiguration.clientSecret, (err, token) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(token);
-      }
-    });
+  const authContext = new ConfidentialClientApplication({
+    auth: {
+      clientId: msalConfiguration.clientID,
+      authority: msalConfiguration.authority.replace('common', msalConfiguration.tenantID),
+      clientSecret: msalConfiguration.clientSecret
+    }
+  });
+  return authContext.acquireTokenByClientCredential({
+    scopes: [resource]
   });
 }

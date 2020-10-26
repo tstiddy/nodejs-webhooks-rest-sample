@@ -33,8 +33,9 @@ authRouter.get('/', (req, res) => {
 });
 
 // Start authentication flow
-authRouter.get('/signin', (req, res) => {
-  res.redirect(getAuthUrl());
+authRouter.get('/signin', async (req, res) => {
+  const url = await getAuthUrl();
+  res.redirect(url);
 });
 
 // This route gets called at the end of the authentication flow.

@@ -5,7 +5,7 @@ import escape from 'escape-html';
 import { ioServer } from '../helpers/socketHelper';
 import { SubscriptionManagementService } from '../helpers/requestHelper';
 import { getSubscription } from '../helpers/dbHelper';
-import { subscriptionConfiguration, certificateConfiguration, adalConfiguration } from '../constants';
+import { subscriptionConfiguration, certificateConfiguration, msalConfiguration } from '../constants';
 import { decryptSymetricKey, decryptPayload, verifySignature } from '../helpers/certificateHelper';
 import { isTokenValid } from '../helpers/tokenHelper';
 
@@ -43,7 +43,7 @@ listenRouter.post('/', async (req, res, next) => {
     // if we're receiving notifications with resource data we have to validate the origin of the request by validating the tokens
     let areTokensValid = true;
     if (req.body.validationTokens) {
-      const validationResults = await Promise.all(req.body.validationTokens.map((x) => isTokenValid(x, adalConfiguration.clientID, adalConfiguration.tenantID)));
+      const validationResults = await Promise.all(req.body.validationTokens.map((x) => isTokenValid(x, msalConfiguration.clientID, msalConfiguration.tenantID)));
       areTokensValid = validationResults.reduce((x, y) => x && y);
     }
 
