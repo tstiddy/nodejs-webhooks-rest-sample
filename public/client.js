@@ -35,7 +35,7 @@ document.getElementById('signOutButton').onclick = () => {
 };
 
 function getQueryStringParameter(paramToRetrieve) {
-  const params = document.URL.split('?')[1].split('&');
+  const params = document.URL.split('#')[0].split('?')[1].split('&');
 
   for (let i = 0; i < params.length; i++) {
     const singleParam = params[i].split('=');
