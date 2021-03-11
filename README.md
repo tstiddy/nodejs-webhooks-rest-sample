@@ -24,7 +24,7 @@ extensions:
 ---
 # Microsoft Graph Webhooks Sample for Node.js
 
-![Build status](https://github.com/microsoftgraph/nodejs-webhooks-rest-sample/workflows/Node.js%20CI/badge.svg?branch=master)
+![Build status](https://github.com/microsoftgraph/nodejs-webhooks-rest-sample/workflows/Node.js%20CI/badge.svg?branch=main)
 
 Subscribe for [Microsoft Graph change notifications](https://docs.microsoft.com/graph/api/resources/webhooks) to be notified when your user's data changes, so you don't have to poll for changes.
 
