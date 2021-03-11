@@ -58,7 +58,7 @@ Copy and store the **Client ID** and **Client Secret** values.
 
 ### Notification URL in file constants.js
 
-Update the **notificationUrl** value in the file [`constants.js`](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/blob/master/constants.js#L10) file to
+Update the **notificationUrl** value in the file [`constants.js`](https://github.com/OfficeDev/Microsoft-Graph-Nodejs-Webhooks/blob/main/constants.js#L10) file to
 
 ```
 http://<cloud_service_URL>/listen
