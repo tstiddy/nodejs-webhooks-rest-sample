@@ -16,12 +16,12 @@ export function createSelfSignedCertificateIfNotExists(certPath, keyPath, passwo
     if (!fs.existsSync(certFullPath)) {
       ensureOpenSsl();
       pem.createCertificate({ selfSigned: true, serviceKeyPassword: password, days: 365 }, (err, result) => {
-        fs.writeFileSync(certFullPath, result.certificate);
-        fs.writeFileSync(path.join(__dirname, keyPath), result.serviceKey);
         if (err) {
           // eslint-disable-next-line no-console
           console.error(err);
         }
+        fs.writeFileSync(certFullPath, result.certificate);
+        fs.writeFileSync(path.join(__dirname, keyPath), result.serviceKey);
         resolve();
       });
     } else {
