@@ -5,11 +5,10 @@ const client = jkwsClient({
   jwksUri: 'https://login.microsoftonline.com/common/discovery/v2.0/keys'
 });
 
-export function getKey(header, callback) {
-  client.getSigningKey(header.kid, (err, key) => {
-    var signingKey = key.publicKey || key.rsaPublicKey;
-    callback(null, signingKey);
-  });
+export async function getKey(header, callback) {
+  const key = await client.getSigningKey(header.kid);
+  const signingKey = key.publicKey || key.rsaPublicKey;
+  callback(null, signingKey);
 }
 
 export function isTokenValid(token, appId, tenantId) {
