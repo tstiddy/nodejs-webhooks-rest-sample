@@ -1,5 +1,4 @@
 import express from 'express';
-import http from 'http';
 import escape from 'escape-html';
 
 import { ioServer } from '../helpers/socketHelper';
