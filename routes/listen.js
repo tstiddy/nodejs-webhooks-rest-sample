@@ -1,5 +1,4 @@
 import express from 'express';
-import http from 'http';
 import escape from 'escape-html';
 
 import { ioServer } from '../helpers/socketHelper';
@@ -80,7 +79,7 @@ listenRouter.post('/', async (req, res, next) => {
       status = 202;
     }
   }
-  res.status(status).end(http.STATUS_CODES[status]);
+  res.status(status).end();
 });
 
 function emitNotification(subscriptionId, data) {
