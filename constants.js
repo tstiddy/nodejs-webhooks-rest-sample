@@ -1,16 +1,16 @@
 exports.msalConfiguration = {
   authority: 'https://login.microsoftonline.com/common',
-  clientID: 'ENTER_YOUR_CLIENT_ID',
-  clientSecret: 'ENTER_YOUR_SECRET',
-  tenantID: 'ENTER_YOUR_TENANT_ID',
-  redirectUri: 'http://localhost:3000/callback'
+  clientID: '48c67627-f261-458a-bf10-b356b290ae23',
+  clientSecret: 'kquohJDJW297|]exQCL91=+',
+  tenantID: 'e0f02755-8e4c-4128-8816-a48b19e2577b',
+  redirectUri: 'https://oauth.pstmn.io/v1/browser-callback'
 };
 
 exports.subscriptionConfiguration = {
   changeType: 'Created',
-  notificationUrl: 'https://NGROK_ID.ngrok.io/listen',
-  resource: 'me/mailFolders(\'Inbox\')/messages',
-  clientState: 'cLIENTsTATEfORvALIDATION',
+  notificationUrl: 'https://teams-api-test.azurewebsites.net/',
+  resource: 'communications/callRecords',
+  clientState: 'secrectClientState',
   includeResourceData: false
 };
 
