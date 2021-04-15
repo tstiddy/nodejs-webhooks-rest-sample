@@ -1,8 +1,8 @@
 exports.msalConfiguration = {
   authority: 'https://login.microsoftonline.com/common',
-  clientID: 'ENTER_YOUR_CLIENT_ID',
-  clientSecret: 'ENTER_YOUR_SECRET',
-  tenantID: 'ENTER_YOUR_TENANT_ID',
+  clientID: 'c1f79ce2-1eae-4816-8fa8-387924c66c22',
+  clientSecret: 'B-q7HwblM4mPPDLXP9_VGM~Qij526uU~8K',
+  tenantID: 'e0f02755-8e4c-4128-8816-a48b19e2577b',
   redirectUri: 'http://localhost:3000/callback'
 };
 
