@@ -3,7 +3,7 @@ exports.msalConfiguration = {
   clientID: '48c67627-f261-458a-bf10-b356b290ae23',
   clientSecret: 'kquohJDJW297|]exQCL91=+',
   tenantID: 'e0f02755-8e4c-4128-8816-a48b19e2577b',
-  redirectUri: 'https://teams-api-test.azurewebsites.net/'
+  //redirectUri: 'https://oauth.pstmn.io/v1/browser-callback'
 };
 
 exports.subscriptionConfiguration = {
